@@ -12,25 +12,15 @@
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
 function akguy_banner() {
-    cat << "EOF"
-                                                                                  
-                             tttt         hhhhhhh              222222222222222    
-                          ttt:::t         h:::::h             2:::::::::::::::22  
-                          t:::::t         h:::::h             2::::::222222:::::2 
-                          t:::::t         h:::::h             2222222     2:::::2 
-    eeeeeeeeeeee    ttttttt:::::ttttttt    h::::h hhhhh                   2:::::2 
-  ee::::::::::::ee  t:::::::::::::::::t    h::::hh:::::hhh                2:::::2 
- e::::::eeeee:::::eet:::::::::::::::::t    h::::::::::::::hh           2222::::2  
-e::::::e     e:::::etttttt:::::::tttttt    h:::::::hhh::::::h     22222::::::22   
-e:::::::eeeee::::::e      t:::::t          h::::::h   h::::::h  22::::::::222     
-e:::::::::::::::::e       t:::::t          h:::::h     h:::::h 2:::::22222        
-e::::::eeeeeeeeeee        t:::::t          h:::::h     h:::::h2:::::2             
-e:::::::e                 t:::::t    tttttth:::::h     h:::::h2:::::2             
-e::::::::e                t::::::tttt:::::th:::::h     h:::::h2:::::2       222222
- e::::::::eeeeeeee        tt::::::::::::::th:::::h     h:::::h2::::::2222222:::::2
-  ee:::::::::::::e          tt:::::::::::tth:::::h     h:::::h2::::::::::::::::::2
-    eeeeeeeeeeeeee            ttttttttttt  hhhhhhh     hhhhhhh22222222222222222222
-    
+    cat << "EOF"                                                                      
+
+       _   _     ___  
+      | | | |   |__ \ 
+   ___| |_| |__    ) |
+  / _ \ __| '_ \  / / 
+ |  __/ |_| | | |/ /_ 
+  \___|\__|_| |_|____|
+                                        
     jnnn.gs
 EOF
 }
@@ -122,7 +112,7 @@ function begin_log() {
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : SCRIPT STARTED SUCCESSFULLY " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e "------- AKcryptoGUY's VPS Hardening Script --------- " | tee -a "$LOGFILE"
+    echo -e "------- jnnn.gs Hardening and eth2 Script --------- " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
     sleep 2
@@ -663,7 +653,7 @@ function ufw_config() {
 	sudo ufw allow 3000/tcp
 	sudo ufw default deny incoming
 	sudo ufw default allow outgoing
-	sudo ufw enable
+	#sudo ufw enable
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
@@ -1113,26 +1103,16 @@ function display_banner() {
     echo -e "${lightcyan}"
     cat << "EOF"
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                                                                                  
-                             tttt         hhhhhhh              222222222222222    
-                          ttt:::t         h:::::h             2:::::::::::::::22  
-                          t:::::t         h:::::h             2::::::222222:::::2 
-                          t:::::t         h:::::h             2222222     2:::::2 
-    eeeeeeeeeeee    ttttttt:::::ttttttt    h::::h hhhhh                   2:::::2 
-  ee::::::::::::ee  t:::::::::::::::::t    h::::hh:::::hhh                2:::::2 
- e::::::eeeee:::::eet:::::::::::::::::t    h::::::::::::::hh           2222::::2  
-e::::::e     e:::::etttttt:::::::tttttt    h:::::::hhh::::::h     22222::::::22   
-e:::::::eeeee::::::e      t:::::t          h::::::h   h::::::h  22::::::::222     
-e:::::::::::::::::e       t:::::t          h:::::h     h:::::h 2:::::22222        
-e::::::eeeeeeeeeee        t:::::t          h:::::h     h:::::h2:::::2             
-e:::::::e                 t:::::t    tttttth:::::h     h:::::h2:::::2             
-e::::::::e                t::::::tttt:::::th:::::h     h:::::h2:::::2       222222
- e::::::::eeeeeeee        tt::::::::::::::th:::::h     h:::::h2::::::2222222:::::2
-  ee:::::::::::::e          tt:::::::::::tth:::::h     h:::::h2::::::::::::::::::2
-    eeeeeeeeeeeeee            ttttttttttt  hhhhhhh     hhhhhhh22222222222222222222
-    
+       _   _     ___  
+      | | | |   |__ \ 
+   ___| |_| |__    ) |
+  / _ \ __| '_ \  / / 
+ |  __/ |_| | | |/ /_ 
+  \___|\__|_| |_|____|
+                                        
     jnnn.gs
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 EOF
     echo -e -n "${nocolor}"
 }
