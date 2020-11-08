@@ -1117,6 +1117,17 @@ function display_banner() {
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 EOF
     echo -e -n "${nocolor}"
+    echo "Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator "
+    echo "-Prysm Beacon Chain"
+    echo "-Prysm Validator"
+    echo "-geth"
+    echo "-Prometheus"
+    echo "-Grafana"
+    echo "-node_exporter"
+    echo "-blackbox_exporter"
+    echo "-eth2stats"
+    echo ""  
+    echo " credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!"
 }
 
 check_distro
