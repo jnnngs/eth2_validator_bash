@@ -1,8 +1,15 @@
 #!/bin/bash
-# Script to Harden Security on Ubuntu 16.04 LTS (untested on anything else)
-# This VPS Server Hardening script is designed to be run on new VPS deployments to simplify a lot of the
-# basic hardening that can be done to protect your server. I assimilated several design ideas from AMega's
-# VPS hardening script which I found on Github seemingly abandoned. I am very happy to finish it.
+# Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator 
+# -Prysm Beacon Chain
+# -Prysm Validator
+# -geth
+# -Prometheus
+# -Grafana
+# -node_exporter
+# -blackbox_exporter
+# -eth2stats
+#  
+# credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
 function akguy_banner() {
     cat << "EOF"
@@ -32,16 +39,14 @@ EOF
 # 1. CREATE SWAP / if no swap exists, create 1 GB swap
 # 2. UPDATE AND UPGRADE / update operating system & pkgs
 # 3. INSTALL FAVORED PACKAGES / useful tools & utilities
-# 4. INSTALL CRYPTO PACKAGES / common crypto packages
-# 5. USER SETUP / add new sudo user, copy SSH keys
-# 6. SSH CONFIG / change SSH port, disable root login
-# 7. UFW CONFIG / UFW - add rules, harden, enable firewall
-# 8. HARDENING / before rules, secure shared memory, etc
-# 9. GOOGLE AUTH / enable 2fa using Google Authenticator
-# 10. KSPLICE INSTALL / automatically update without reboot
-# 11. MOTD EDIT / replace boring banner with customized one
-# 12. RESTART SSHD / apply settings by restarting systemctl
-# 13. INSTALL COMPLETE / display new SSH and login info
+# 4. USER SETUP / add new sudo user, copy SSH keys
+# 5. SSH CONFIG / change SSH port, disable root login
+# 6. UFW CONFIG / UFW - add rules, harden, enable firewall
+# 7. HARDENING / before rules, secure shared memory, etc
+# 8. KSPLICE INSTALL / automatically update without reboot
+# 9. MOTD EDIT / replace boring banner with customized one
+# 10. RESTART SSHD / apply settings by restarting systemctl
+# 11. INSTALL COMPLETE / display new SSH and login info
 
 # Add to log command and display output on screen
 # echo " $(date +%m.%d.%Y_%H:%M:%S) : $MESSAGE" | tee -a "$LOGFILE"
@@ -239,8 +244,8 @@ function favored_packages() {
     echo -e "--------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e -n "${white}"
     echo ' # apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install ' | tee -a "$LOGFILE"
-    echo '   htop nethogs ufw fail2ban wondershaper glances ntp figlet lsb-release ' | tee -a "$LOGFILE"
-    echo '   update-motd unattended-upgrades secure-delete net-tools dnsutils' | tee -a "$LOGFILE"
+    echo '   htop nethogs ufw fail2ban wondershaper glances ntp figlet lsb-release gpg-agent' | tee -a "$LOGFILE"
+    echo '   update-motd unattended-upgrades secure-delete net-tools dnsutils software-properties-common git ' | tee -a "$LOGFILE"
     echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
     apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install \
@@ -254,91 +259,6 @@ function favored_packages() {
 }
 
 #  PROMPT WHETHER USER WANTS TO INSTALL COMMON CRYPTO PACKAGES OR NOT
-
-#####################
-## CRYPTO PACKAGES ##
-#####################
-function crypto_packages() {
-    echo -e -n "${lightcyan}"
-    figlet Crypto Setup | tee -a "$LOGFILE"
-    echo -e -n "${yellow}"
-    echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : QUERY TO INSTALL CRYPTO PKGS " | tee -a "$LOGFILE"
-    echo -e "---------------------------------------------------- \n"
-    echo -e -n "${lightcyan}"
-    echo " I frequently use Ubuntu Virtual Machines for cryptocurrency projects"
-    echo " to compile or build wallets from source code but I realize that there"
-    echo " are plenty of other reasons to use them. If using the VPS for crypto,"
-    echo " installing these packages now can save you some time later. "
-    echo -e "\n"
-
-        echo -e -n "${cyan}"
-            while :; do
-            echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install these crypto packages now? y/n  " INSTALLCRYPTO
-            if [[ ${INSTALLCRYPTO,,} == "y" || ${INSTALLCRYPTO,,} == "Y" || ${INSTALLCRYPTO,,} == "N" || ${INSTALLCRYPTO,,} == "n" ]]
-            then
-                break
-            fi
-        done
-        echo -e "${nocolor}"
-
-    # check if INSTALLCRYPTO is valid
-    if [ "${INSTALLCRYPTO,,}" = "Y" ] || [ "${INSTALLCRYPTO,,}" = "y" ]
-    then echo -e "\n"
-        echo -e -n "${yellow}"
-        echo -e " Great; let's install them now... \n"
-        echo -e -n "${lightcyan}"
-        figlet Install Crypto | tee -a "$LOGFILE"
-        echo -e -n "${yellow}"
-        echo -e "-------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " $(date +%m.%d.%Y_%H:%M:%S) : INSTALLING CRYPTO PACKAGES " | tee -a "$LOGFILE"
-        echo -e "-------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${white}"
-        echo ' # add-apt-repository -yu ppa:bitcoin/bitcoin' | tee -a "$LOGFILE"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-        add-apt-repository -yu ppa:bitcoin/bitcoin | tee -a "$LOGFILE"
-        echo -e -n "${white}"
-        echo -e "---------------------------------------------------------------------- " | tee -a "$LOGFILE"
-        echo ' # apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install ' | tee -a "$LOGFILE"
-        echo '   build-essential g++ protobuf-compiler libboost-all-dev autotools-dev ' | tee -a "$LOGFILE"
-        echo '   automake libcurl4-openssl-dev libboost-all-dev libssl-dev libdb++-dev ' | tee -a "$LOGFILE"
-        echo '   make autoconf automake libtool git apt-utils libprotobuf-dev pkg-config ' | tee -a "$LOGFILE"
-        echo '   libcurl3-dev libudev-dev libqrencode-dev bsdmainutils pkg-config libssl-dev ' | tee -a "$LOGFILE"
-        echo '   libgmp3-dev libevent-dev jp2a pv virtualenv lsb-release update-motd ' | tee -a "$LOGFILE"
-        echo -e "----------------------------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${lightred}"
-        echo -e " This step can appear to hang for a minute or two so don't be alarmed "
-        echo -e "---------------------------------------------------------------------- "
-        echo -e -n "${nocolor}"
-        apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install \
-            build-essential g++ protobuf-compiler libboost-all-dev autotools-dev \
-            automake libcurl4-openssl-dev libboost-all-dev libssl-dev libdb++-dev \
-            make autoconf automake libtool git apt-utils libprotobuf-dev pkg-config \
-            libcurl3-dev libudev-dev libqrencode-dev bsdmainutils pkg-config libssl-dev \
-            libgmp3-dev libevent-dev jp2a pv virtualenv lsb-release update-motd  | tee -a "$LOGFILE"
-			
-        # need more testing to see if autoremove breaks the script or not
-        # apt autoremove -y | tee -a "$LOGFILE"
-        clear
-        echo -e -n "${lightgreen}"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " $(date +%m.%d.%Y_%H:%M:%S) : CRYPTO INSTALLED SUCCESFULLY " | tee -a "$LOGFILE"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-    else 	echo -e -n "${yellow}"
-        clear
-        echo  -e "----------------------------------------------------- " >> $LOGFILE 2>&1
-        echo  "    ** User chose not to install crypto packages **" >> $LOGFILE 2>&1
-        echo  -e "-----------------------------------------------------" >> $LOGFILE 2>&1
-    fi
-    echo -e -n "${lightgreen}"
-    echo -e "----------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : CRYPTO PACKAGE SETUP COMPLETE " | tee -a "$LOGFILE"
-    echo -e "----------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e -n "${nocolor}"
-}
 
 ################
 ## USER SETUP ##
@@ -729,10 +649,21 @@ function ufw_config() {
         ufw default allow outgoing >> $LOGFILE 2>&1
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # ufw default deny incoming"
-        ufw default deny incoming >> $LOGFILE 2>&1
+        #ufw default deny incoming >> $LOGFILE 2>&1
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo -e " # ufw allow $SSHPORT" | tee -a "$LOGFILE"
         ufw allow "$SSHPORT" | tee -a "$LOGFILE"
+	# beacon chain
+	sudo ufw allow 12000/udp
+	sudo ufw allow 13000/tcp
+	# geth
+	sudo ufw allow 30303/tcp
+	sudo ufw allow 30303/udp
+	# grafana
+	sudo ufw allow 3000/tcp
+	sudo ufw default deny incoming
+	sudo ufw default allow outgoing
+	sudo ufw enable
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
@@ -863,97 +794,6 @@ function server_hardening() {
         echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
         echo -e " *** User elected not to GET HARD at this time *** " | tee -a "$LOGFILE"
         echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-    fi
-}
-
-##################
-## Google Auth  ##
-##################
-
-function google_auth() {
-    # prompt users to install Google Authenticator or not
-    echo -e -n "${lightcyan}"
-    figlet Goog Auth | tee -a "$LOGFILE"
-    echo -e -n "${yellow}"
-    echo -e "--------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " $(date +%m.%d.%Y_%H:%M:%S) : QUERY TO INSTALL GOOGLE 2FA " | tee -a "$LOGFILE"
-    echo -e "--------------------------------------------------- \n" | tee -a "$LOGFILE"
-    echo -e -n "${lightcyan}"
-    echo -e " You can increase the security of your VPS by installing a 2-factor"
-    echo -e " authentication solution which will require a time-based, one-time"
-    echo -e " token in addition to your username and password. This installation"
-    echo -e " requires you to use the Google Authenticator app on your phone.\n"
-
-        echo -e -n "${cyan}"
-            while :; do
-            echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install Google 2FA Authentication? y/n  " GOOGLEAUTH
-            if [[ ${GOOGLEAUTH,,} == "y" || ${GOOGLEAUTH,,} == "Y" || ${GOOGLEAUTH,,} == "N" || ${GOOGLEAUTH,,} == "n" ]]
-            then
-                break
-            fi
-        done
-        echo -e "${nocolor}\n"    
-    
-    # check if GOOGLEAUTH is valid
-    if [ "${GOOGLEAUTH,,}" = "Y" ] || [ "${GOOGLEAUTH,,}" = "y" ]
-    then
-
-        # installing google authenticator
-        echo -e -n "${yellow}"
-        echo -e "------------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " $(date +%m.%d.%Y_%H:%M:%S) : INSTALLING GOOGLE AUTHENTICATOR " | tee -a "$LOGFILE"
-        echo -e "------------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${white}"
-
-        echo -e -n "${nocolor}"
-        apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install libpam-google-authenticator | tee -a "$LOGFILE"
-        google-authenticator
-
-        echo -e ' --> Enabling Google Authenticator in /etc/pam.d/sshd'  | tee -a "$LOGFILE"
-        sed -i "s/@include common-auth/#@include common-auth/" /etc/pam.d/sshd
-        echo 'auth required pam_google_authenticator.so' | sudo tee -a /etc/pam.d/sshd
-
-        echo -e ' --> Enabling Google Authenticator in /etc/ssh/sshd_config'  | tee -a "$LOGFILE"
-        sed -i "s/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/" /etc/ssh/sshd_config
-        sed -i "s/PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config
-        echo 'AuthenticationMethods publickey,keyboard-interactive' | sudo tee -a /etc/ssh/sshd_config
-        
-            # copy Google Auth key to new user if it exists
-            if [ "${UNAME,,}" ] && [ -e /root/.google_authenticator ]
-            then # copy root Google Authenticator file new non-root user
-                cp /root/.google_authenticator /home/"${UNAME,,}"/.google_authenticator
-                # fix permissions on RSA key
-                chmod 400 /home/"${UNAME,,}"/.google_authenticator
-                chown "${UNAME,,}":"${UNAME,,}" /home/"${UNAME,,}" -R
-                echo " $(date +%m.%d.%Y_%H:%M:%S) : SUCCESS : Google Auth file was applied to ${UNAME,,}'s profile" | tee -a "$LOGFILE"
-            else echo -e -n "${yellow}"
-                echo " $(date +%m.%d.%Y_%H:%M:%S) : Google Auth file not present for root, so none was copied." | tee -a "$LOGFILE"
-            fi
-
-        # Error Handling
-        if [ $? -eq 0 ]
-        then 	echo -e " \n" ; clear
-            echo -e -n "${green}"
-            echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
-            echo " $(date +%m.%d.%Y_%H:%M:%S) : SUCCESS : 2FA Installed" | tee -a "$LOGFILE"
-            echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e -n "${nocolor}"
-        else	clear
-            echo -e -n "${lightred}"
-            echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
-            echo " $(date +%m.%d.%Y_%H:%M:%S) : ERROR: 2FA Failed" | tee -a "$LOGFILE"
-            echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e -n "${nocolor}"
-        fi
-
-    else :
-        clear
-        echo -e -n "${yellow}"
-        echo -e "------------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " *** User chose to not install Google Authenticator *** " | tee -a "$LOGFILE"
-        echo -e "------------------------------------------------------- " | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
     fi
 }
@@ -1240,9 +1080,6 @@ function install_complete() {
     echo -e " --> Your SSH port for remote access is" "$SSHPORTIS"	| tee -a "$LOGFILE"
     echo -e " --> Root login settings are:" "$ROOTLOGINP" | tee -a "$LOGFILE"
 
-    if [ "${INSTALLCRYPTO,,}" = "yes" ] || [ "${INSTALLCRYPTO,,}" = "y" ]
-    then echo -e " --> Common crypto packages were installed" | tee -a "$LOGFILE"
-    fi
     if [ -n "${UNAME,,}" ]
     then echo -e "${white} We created a non-root user named (lower case):${nocolor}" "${UNAME,,}" | tee -a "$LOGFILE"
     else echo -e "${white} A new user was not created during the setup process ${nocolor}" | tee -a "$LOGFILE"
@@ -1276,15 +1113,25 @@ function display_banner() {
     echo -e "${lightcyan}"
     cat << "EOF"
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     _    _  __                     _         ____ _   ___   __
-    / \  | |/ /___ _ __ _   _ _ __ | |_ ___  / ___| | | \ \ / /
-   / _ \ | ' // __| '__| | | | '_ \| __/ _ \| |  _| | | |\ V /
-  / ___ \| . \ (__| |  | |_| | |_) | || (_) | |_| | |_| | | |
- /_/   \_\_|\_\___|_|   \__, | .__/ \__\___/ \____|\___/  |_|
-                        |___/|_|
-            __  __             __  __  ___          __
-  -->  \  /|__)/__`   |__| /\ |__)|  \|__ |\ |||\ |/ _`  <--
-        \/ |   .__/   |  |/~~\|  \|__/|___| \||| \|\__>
+                                                                                  
+                             tttt         hhhhhhh              222222222222222    
+                          ttt:::t         h:::::h             2:::::::::::::::22  
+                          t:::::t         h:::::h             2::::::222222:::::2 
+                          t:::::t         h:::::h             2222222     2:::::2 
+    eeeeeeeeeeee    ttttttt:::::ttttttt    h::::h hhhhh                   2:::::2 
+  ee::::::::::::ee  t:::::::::::::::::t    h::::hh:::::hhh                2:::::2 
+ e::::::eeeee:::::eet:::::::::::::::::t    h::::::::::::::hh           2222::::2  
+e::::::e     e:::::etttttt:::::::tttttt    h:::::::hhh::::::h     22222::::::22   
+e:::::::eeeee::::::e      t:::::t          h::::::h   h::::::h  22::::::::222     
+e:::::::::::::::::e       t:::::t          h:::::h     h:::::h 2:::::22222        
+e::::::eeeeeeeeeee        t:::::t          h:::::h     h:::::h2:::::2             
+e:::::::e                 t:::::t    tttttth:::::h     h:::::h2:::::2             
+e::::::::e                t::::::tttt:::::th:::::h     h:::::h2:::::2       222222
+ e::::::::eeeeeeee        tt::::::::::::::th:::::h     h:::::h2::::::2222222:::::2
+  ee:::::::::::::e          tt:::::::::::tth:::::h     h:::::h2::::::::::::::::::2
+    eeeeeeeeeeeeee            ttttttttttt  hhhhhhh     hhhhhhh22222222222222222222
+    
+    jnnn.gs
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 EOF
     echo -e -n "${nocolor}"
@@ -1297,14 +1144,12 @@ begin_log
 create_swap
 update_upgrade
 favored_packages
-crypto_packages
 add_user
 collect_sshd
 prompt_rootlogin
 disable_passauth
 ufw_config
 server_hardening
-google_auth
 ksplice_install
 motd_install
 restart_sshd
