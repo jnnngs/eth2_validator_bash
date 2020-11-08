@@ -1102,11 +1102,11 @@ function install_complete() {
 
 function display_banner() {
 
-    echo -e "${lightcyan}"
     echo -e -n "${lightcyan}"
     figlet eth 2 -f small
     figlet validator -f small
     echo "jnnn.gs v0.1"
+    echo ""  
     echo -e -n "${lightgreen}"
     echo "Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator "
     echo "-Prysm Beacon Chain"
@@ -1119,7 +1119,7 @@ function display_banner() {
     echo "-eth2stats"
     echo ""  
     echo -e -n "${nocolor}"
-    echo " credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!"
+    echo " 5 Second pause for respect: https://github.com/metanull-operator/eth2-ubuntu"
 }
 
 check_distro
@@ -1127,6 +1127,7 @@ setup_environment
 clear
 display_banner
 sleep 5
+clear
 begin_log
 create_swap
 update_upgrade
