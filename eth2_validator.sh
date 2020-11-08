@@ -1125,6 +1125,7 @@ figlet eth2 -f small | tee -a "$LOGFILE"
 figlet validator -f small | tee -a "$LOGFILE"
 echo "jnnn.gs v0.1"
 echo -e -n "${lightgreen}"
+sleep 5
 begin_log
 create_swap
 update_upgrade
