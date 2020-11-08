@@ -1103,20 +1103,11 @@ function install_complete() {
 function display_banner() {
 
     echo -e "${lightcyan}"
-    cat << "EOF"
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-       _   _     ___  
-      | | | |   |__ \ 
-   ___| |_| |__    ) |
-  / _ \ __| '_ \  / / 
- |  __/ |_| | | |/ /_ 
-  \___|\__|_| |_|____|
-                                        
-    jnnn.gs
-
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-EOF
-    echo -e -n "${nocolor}"
+    echo -e -n "${lightcyan}"
+    figlet eth 2 -f small
+    figlet validator -f small
+    echo "jnnn.gs v0.1"
+    echo -e -n "${lightgreen}"
     echo "Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator "
     echo "-Prysm Beacon Chain"
     echo "-Prysm Validator"
@@ -1127,17 +1118,14 @@ EOF
     echo "-blackbox_exporter"
     echo "-eth2stats"
     echo ""  
+    echo -e -n "${nocolor}"
     echo " credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!"
 }
 
 check_distro
 setup_environment
 clear
-echo -e -n "${lightcyan}"
-figlet eth 2 -f small
-figlet validator -f small
-echo "jnnn.gs v0.1"
-echo -e -n "${lightgreen}"
+display_banner
 sleep 5
 begin_log
 create_swap
