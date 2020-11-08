@@ -643,6 +643,8 @@ function ufw_config() {
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo -e " # ufw allow $SSHPORT" | tee -a "$LOGFILE"
         ufw allow "$SSHPORT" | tee -a "$LOGFILE"
+	ufw allow http
+	ufw allow https
 	# beacon chain
 	sudo ufw allow 12000/udp
 	sudo ufw allow 13000/tcp
