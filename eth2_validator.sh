@@ -1121,8 +1121,8 @@ check_distro
 setup_environment
 clear
 echo -e -n "${lightcyan}"
-figlet eth2 -f small | tee -a "$LOGFILE"
-figlet validator -f small | tee -a "$LOGFILE"
+figlet eth 2 -f small
+figlet validator -f small
 echo "jnnn.gs v0.1"
 echo -e -n "${lightgreen}"
 sleep 5
