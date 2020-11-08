@@ -1119,7 +1119,12 @@ EOF
 
 check_distro
 setup_environment
-display_banner
+clear
+echo -e -n "${lightcyan}"
+figlet eth2 -f small | tee -a "$LOGFILE"
+figlet validator -f small | tee -a "$LOGFILE"
+echo "jnnn.gs v0.1"
+echo -e -n "${lightgreen}"
 begin_log
 create_swap
 update_upgrade
