@@ -1088,10 +1088,10 @@ function install_geth() {
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # Add geth repro"
         sudo add-apt-repository -y ppa:ethereum/ethereum
-	sudo apt-get update
+	sudo apt-get update >> $LOGFILE 2>&1
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # install ethereum"
-	sudo apt-get install ethereum
+	sudo apt-get install ethereum -qqy >> $LOGFILE 2>&1
         # add user account
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # add geth user account"
