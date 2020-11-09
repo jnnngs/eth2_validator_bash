@@ -36,7 +36,8 @@ EOF
 # 8. KSPLICE INSTALL / automatically update without reboot
 # 9. MOTD EDIT / replace boring banner with customized one
 # 10. RESTART SSHD / apply settings by restarting systemctl
-# 11. INSTALL COMPLETE / display new SSH and login info
+# 11. Install eth 1 full node (geth)
+# 12. INSTALL COMPLETE / display new SSH and login info
 
 # Add to log command and display output on screen
 # echo " $(date +%m.%d.%Y_%H:%M:%S) : $MESSAGE" | tee -a "$LOGFILE"
@@ -1053,6 +1054,78 @@ function restart_sshd() {
     fi
 }
 
+##################
+## GETH INSTALL ##
+##################
+
+function install_geth() {
+    # query user to disable password authentication or not
+    echo -e -n "${lightcyan}"
+    figlet GETH Install | tee -a "$LOGFILE"
+    echo -e -n "${yellow}"
+    echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
+    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
+    echo -e "---------------------------------------------- \n"
+    echo -e -n "${lightcyan}"
+    echo -e " GETH is an eth 1 full node to feed eth 1 ledger into"
+    echo -e "  the beacon node."
+    echo -e
+    
+        echo -e -n "${cyan}"
+            while :; do
+            echo -e "\n"
+            read -n 1 -s -r -p " Would you like to install GETH eth1 full node?? y/n  " GETHINSTALL
+            if [[ ${GETHINSTALL,,} == "y" || ${GETHINSTALL,,} == "Y" || ${GETHINSTALL,,} == "N" || ${GETHINSTALL,,} == "n" ]]
+            then
+                break
+            fi
+        done
+        echo -e "${nocolor}\n"
+    
+    if [ "${GETHINSTALL,,}" = "Y" ] || [ "${GETHINSTALL,,}" = "y" ]
+    then	echo -e -n "${nocolor}"
+        # Add repro #
+	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+        echo " # Add geth repro"
+        sudo add-apt-repository -y ppa:ethereum/ethereum
+	sudo apt-get update
+	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+        echo " # install ethereum"
+	sudo apt-get install ethereum
+        # add user account
+	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+        echo " # add geth user account"
+	sudo adduser --home /home/geth --disabled-password --gecos 'Go Ethereum Client' geth
+	# download systemd Service File
+	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+        echo " #download geth systemd Service File"
+	wget -O /etc/systemd/system/geth.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/geth.service
+        echo -e -n "${white}"
+        echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+        echo " # reload daemon, start and enable geth"
+        sudo systemctl daemon-reload
+	sudo systemctl start geth
+	sudo systemctl enable geth
+        echo -e "------------------------- \n" | tee -a "$LOGFILE"
+        echo -e -n "${nocolor}"
+        sleep 1
+        # 
+    else	echo -e -n "${yellow}"
+        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
+        echo -e " ** User chose not to setup geth at this time **"  | tee -a "$LOGFILE"
+        echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
+        echo -e -n "${nocolor}"
+        sleep 1
+    fi
+
+    clear
+    echo -e -n "${lightgreen}"
+    echo -e "------------------------------------------------ " | tee -a "$LOGFILE"
+    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH FULL NODE COMPLETE " | tee -a "$LOGFILE"
+    echo -e "------------------------------------------------ " | tee -a "$LOGFILE"
+    echo -e -n "${nocolor}"
+}
+
 ######################
 ## Install Complete ##
 ######################
@@ -1141,6 +1214,7 @@ server_hardening
 ksplice_install
 motd_install
 restart_sshd
+install_geth
 install_complete
 
 exit
