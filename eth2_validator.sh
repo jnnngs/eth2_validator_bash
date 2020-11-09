@@ -1162,6 +1162,10 @@ function install_complete() {
     then echo -e " You installed Oracle's Ksplice to update without reboot" | tee -a "$LOGFILE"
     else echo -e " You chose NOT to auto-update OS with Oracle's Ksplice" | tee -a "$LOGFILE"
     fi
+    if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
+    then echo -e " You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+    else echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
+    fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " Installation log saved to" $LOGFILE | tee -a "$LOGFILE"
     echo -e " Before modification, your SSH config was backed up to" | tee -a "$LOGFILE"
