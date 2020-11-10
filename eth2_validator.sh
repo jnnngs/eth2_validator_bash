@@ -1029,15 +1029,17 @@ function install_complete() {
     # fi
     if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
     then 
-	echo -e "${white} Start GETH --------------------------------------------- " | tee -a "$LOGFILE"
-	echo -e "${white} You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+        echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
+    	echo -e " | YES: You chose to install GETH eth 1 full node   | " | tee -a "$LOGFILE"
+    	echo -e " |                                                  | " | tee -a "$LOGFILE"
+    	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
 	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl disable geth ${white} <--- disable GETH at startup" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl enable geth ${white} <--- enable GETH at startup" | tee -a "$LOGFILE"
 	echo -e "${green} sudo journalctl -u geth -f ${white} <--- read the end of the log file" | tee -a "$LOGFILE"
-	echo -e "${white} End GETH ----------------------------------------------- " | tee -a "$LOGFILE"
+	echo -e "${white} |--------------------------------------------------| " | tee -a "$LOGFILE"
     else
     	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
     	echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
