@@ -1035,7 +1035,7 @@ function install_complete() {
 	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl disable geth ${white} <--- disable GETH at startup" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl enable geth ${white} <--- enable GETH at startup" | tee -a "$LOGFILE"
-	echo -e "${green} sudo journalctl -u geth -f ${white} <--- read end of log file" | tee -a "$LOGFILE"
+	echo -e "${green} sudo journalctl -u geth -f ${white} <--- read the end of the log file" | tee -a "$LOGFILE"
     else echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
     fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
