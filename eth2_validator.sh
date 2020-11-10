@@ -639,12 +639,10 @@ function ufw_config() {
         ufw default allow outgoing >> $LOGFILE 2>&1
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # ufw default deny incoming"
-        #ufw default deny incoming >> $LOGFILE 2>&1
+        ufw default deny incoming >> $LOGFILE 2>&1
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo -e " # ufw allow $SSHPORT" | tee -a "$LOGFILE"
         ufw allow "$SSHPORT" | tee -a "$LOGFILE"
-	ufw allow http
-	ufw allow https
 	# beacon chain
 	sudo ufw allow 12000/udp
 	sudo ufw allow 13000/tcp
@@ -653,9 +651,6 @@ function ufw_config() {
 	sudo ufw allow 30303/udp
 	# grafana
 	sudo ufw allow 3000/tcp
-	sudo ufw default deny incoming
-	sudo ufw default allow outgoing
-	#sudo ufw enable
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
@@ -1032,12 +1027,13 @@ function install_complete() {
     # then echo -e " --> The server and networking layer were hardened <--" | tee -a "$LOGFILE"
     # else echo -e " --> The server and networking layer were NOT hardened" | tee -a "$LOGFILE"
     # fi
-    if [ "${KSPLICE,,}" = "yes" ] || [ "${KSPLICE,,}" = "y" ]
-    then echo -e " You installed Oracle's Ksplice to update without reboot" | tee -a "$LOGFILE"
-    else echo -e " You chose NOT to auto-update OS with Oracle's Ksplice" | tee -a "$LOGFILE"
-    fi
     if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
-    then echo -e " You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+    then 
+    	echo -e " You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+	echo -e " sudo systemctl stop geth" | tee -a "$LOGFILE"
+	echo -e " sudo systemctl start geth" | tee -a "$LOGFILE"
+	echo -e " sudo systemctl disable geth" | tee -a "$LOGFILE"
+	echo -e " sudo journalctl -u geth -f" | tee -a "$LOGFILE"
     else echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
     fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
