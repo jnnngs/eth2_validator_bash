@@ -1031,10 +1031,11 @@ function install_complete() {
     then 
     	echo -e "${green} You installed GETH eth 1 full node" | tee -a "$LOGFILE"
 	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
-	echo -e " sudo systemctl stop geth" | tee -a "$LOGFILE"
-	echo -e " sudo systemctl start geth" | tee -a "$LOGFILE"
-	echo -e " sudo systemctl disable geth" | tee -a "$LOGFILE"
-	echo -e " sudo journalctl -u geth -f" | tee -a "$LOGFILE"
+	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
+	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
+	echo -e "${green} sudo systemctl disable geth ${white} <--- disable GETH" | tee -a "$LOGFILE"
+	echo -e "${green} sudo systemctl enable geth ${white} <--- enable GETH" | tee -a "$LOGFILE"
+	echo -e "${green} sudo journalctl -u geth -f ${white} <--- read end of log file" | tee -a "$LOGFILE"
     else echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
     fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
