@@ -943,7 +943,7 @@ function install_geth() {
         echo -e -n "${cyan}"
             while :; do
             echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install GETH eth1 full node?? y/n  " GETHINSTALL
+            read -n 1 -s -r -p " Would you like to install GETH eth1 full node? y/n  " GETHINSTALL
             if [[ ${GETHINSTALL,,} == "y" || ${GETHINSTALL,,} == "Y" || ${GETHINSTALL,,} == "N" || ${GETHINSTALL,,} == "n" ]]
             then
                 break
@@ -1029,7 +1029,8 @@ function install_complete() {
     # fi
     if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
     then 
-    	echo -e " You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+    	echo -e "${green} You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
 	echo -e " sudo systemctl stop geth" | tee -a "$LOGFILE"
 	echo -e " sudo systemctl start geth" | tee -a "$LOGFILE"
 	echo -e " sudo systemctl disable geth" | tee -a "$LOGFILE"
