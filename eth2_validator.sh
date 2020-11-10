@@ -33,11 +33,10 @@ EOF
 # 5. SSH CONFIG / change SSH port, disable root login
 # 6. UFW CONFIG / UFW - add rules, harden, enable firewall
 # 7. HARDENING / before rules, secure shared memory, etc
-# 8. KSPLICE INSTALL / automatically update without reboot
-# 9. MOTD EDIT / replace boring banner with customized one
-# 10. RESTART SSHD / apply settings by restarting systemctl
-# 11. Install eth 1 full node (geth)
-# 12. INSTALL COMPLETE / display new SSH and login info
+# 8. MOTD EDIT / replace boring banner with customized one
+# 9. RESTART SSHD / apply settings by restarting systemctl
+# 10. Install eth 1 full node (geth)
+# 11. INSTALL COMPLETE / display new SSH and login info
 
 # Add to log command and display output on screen
 # echo " $(date +%m.%d.%Y_%H:%M:%S) : $MESSAGE" | tee -a "$LOGFILE"
@@ -791,131 +790,6 @@ function server_hardening() {
     fi
 }
 
-#####################
-## Ksplice Install ##
-#####################
-
-function ksplice_install() {
-
-    # This KSplice install script only works for Ubuntu 16.04 at the moment
-    if [[ -r /etc/os-release ]]; then
-        . /etc/os-release
-        if [[ "${VERSION_ID}" != "16.04" ]] ; then
-            echo -e "This KSplice install script only works for Ubuntu 16.04 at the moment, skipping.\n"
-        else 
-
-    # -------> I still need to install an error check after installing Ksplice to make sure \
-        #          the install completed before moving on the configuration
-
-    # prompt users on whether to install Oracle ksplice or not
-    # install created using https://tinyurl.com/y9klkx2j and https://tinyurl.com/y8fr4duq
-    # Official page: https://ksplice.oracle.com/uptrack/guide
-    echo -e -n "${lightcyan}"
-    figlet Ksplice Uptrack | tee -a "$LOGFILE"
-    echo -e -n "${yellow}"
-    echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : INSTALL ORACLE KSPLICE " | tee -a "$LOGFILE"
-    echo -e "---------------------------------------------- \n" | tee -a "$LOGFILE"
-    echo -e -n "${lightcyan}"
-    echo -e " Normally, kernel updates in Linux require a system reboot. Ksplice"
-    echo -e " Uptrack installs these patches in memory for Ubuntu and Fedora"
-    echo -e " Linux so reboots are not needed. It is free for non-commercial use."
-    echo -e " To minimize server downtime, this is a good thing to install.\n"
-    
-        echo -e -n "${cyan}"
-            while :; do
-            echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install Oracle Ksplice Uptrack now? y/n  " KSPLICE
-            if [[ ${KSPLICE,,} == "y" || ${KSPLICE,,} == "Y" || ${KSPLICE,,} == "N" || ${KSPLICE,,} == "n" ]]
-            then
-                break
-            fi
-        done
-        echo -e "${nocolor}\n" 
-
-        if [ "${KSPLICE,,}" = "Y" ] || [ "${KSPLICE,,}" = "y" ]
-        then
-        # install ksplice uptrack
-        echo -e -n "${yellow}"
-        echo -e "--------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " $(date +%m.%d.%Y_%H:%M:%S) : INSTALLING KSPLICE PACKAGES " | tee -a "$LOGFILE"
-        echo -e "--------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${white}"
-        echo ' # apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install ' | tee -a "$LOGFILE"
-        echo '   libgtk2-perl consolekit iproute libck-connector0 libcroco3 libglade2-0 ' | tee -a "$LOGFILE"
-        echo '   libpam-ck-connector librsvg2-2 librsvg2-common python-cairo python-gtk2 ' | tee -a "$LOGFILE"
-        echo '   python-dbus python-gi python-glade2 python-gobject-2 python-pycurl ' | tee -a "$LOGFILE"
-        echo '   python-yaml dbus-x11 python-six python3-yaml ' | tee -a "$LOGFILE"
-        echo -e "--------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-        apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install \
-            libgtk2-perl consolekit iproute libck-connector0 libcroco3 libglade2-0 \
-            libpam-ck-connector librsvg2-2 librsvg2-common python-cairo python-gtk2 \
-            python-dbus python-gi python-glade2 python-gobject-2 python-pycurl \
-            python-yaml dbus-x11 python-six python3-yaml | tee -a "$LOGFILE"
-        echo -e -n "${yellow}"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " $(date +%m.%d.%Y_%H:%M:%S) : KSPLICE PACKAGES INSTALLED" | tee -a "$LOGFILE"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " --> Download & install Ksplice package from Oracle " | tee -a "$LOGFILE"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-        wget -o /var/log/ksplicew1.log https://ksplice.oracle.com/uptrack/dist/xenial/ksplice-uptrack.deb
-        dpkg --log "$LOGFILE" -i ksplice-uptrack.deb
-        if [ -e /etc/uptrack/uptrack.conf ]
-        then
-            echo -e -n "${lightgreen}"
-            echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e " $(date +%m.%d.%Y_%H:%M:%S) : KSPLICE UPTRACK INSTALLED" | tee -a "$LOGFILE"
-            echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e -n "${yellow}"
-            echo -e " ** Enabling autoinstall & correcting permissions ** " | tee -a "$LOGFILE"
-            sed -i "s/autoinstall = no/autoinstall = yes/" /etc/uptrack/uptrack.conf
-            chmod 755 /etc/cron.d/uptrack
-            echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e " ** Activate & install Ksplice patches & updates ** " | tee -a "$LOGFILE"
-            echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e -n "${nocolor}"
-            cat $LOGFILE /var/log/ksplicew1.log > /var/log/join.log
-            cat /var/log/join.log > $LOGFILE
-            rm /var/log/ksplicew1.log
-            rm /var/log/join.log
-            uptrack-upgrade -y | tee -a "$LOGFILE"
-            echo -e -n "${lightgreen}"
-            echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
-            echo -e " $(date +%m.%d.%Y_%H:%M:%S) : KSPLICE UPDATES INSTALLED" | tee -a "$LOGFILE"
-            echo -e "------------------------------------------------- \n" | tee -a "$LOGFILE"
-            echo -e -n "${nocolor}"
-            sleep 1	; #  dramatic pause
-            clear
-            echo -e -n "${lightgreen}"
-            echo -e "------------------------------------------------- " | tee -a "$LOGFILE"
-            echo " $(date +%m.%d.%Y_%H:%M:%S) : SUCCESS : Ksplice Enabled" | tee -a "$LOGFILE"
-            echo -e "------------------------------------------------- \n" | tee -a "$LOGFILE"
-            echo -e -n "${nocolor}"
-        else  	echo -e -n "${lightred}"
-            clear
-            echo -e "-------------------------------------------------------- " | tee -a "$LOGFILE"
-            echo " $(date +%m.%d.%Y_%H:%M:%S) : FAIL : Ksplice was not Installed" | tee -a "$LOGFILE"
-            echo -e "-------------------------------------------------------- \n" | tee -a "$LOGFILE"
-            echo -e -n "${nocolor}"
-        fi
-    else :
-        clear
-        echo -e -n "${yellow}"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e "     ** User elected not to install Ksplice ** " | tee -a "$LOGFILE"
-        echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-    fi
-
-        fi
-    else
-        # no, thats not ok!
-        echo -e "This script only supports Ubuntu, skipping.\n"
-    fi
-}
-
 ###################
 ## MOTD Install  ##
 ###################
@@ -1215,7 +1089,6 @@ prompt_rootlogin
 disable_passauth
 ufw_config
 server_hardening
-ksplice_install
 motd_install
 restart_sshd
 install_geth
