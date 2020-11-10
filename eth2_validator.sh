@@ -1076,7 +1076,8 @@ function display_banner() {
     #echo "-eth2stats"
     echo ""  
     echo -e -n "${nocolor}"
-    echo " 5 Second pause for respect: https://github.com/metanull-operator/eth2-ubuntu"
+    echo " 5 Second pause for respect: https://github.com/metanull-operator/eth2-ubuntu/blob/master/prysm-medalla.md"
+    echo "                           : https://github.com/metanull-operator/eth2-ubuntu"
 }
 
 check_distro
