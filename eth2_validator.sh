@@ -1,8 +1,8 @@
 #!/bin/bash
 # Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator 
+# -geth
 # -Prysm Beacon Chain
 # -Prysm Validator
-# -geth
 # -Prometheus
 # -Grafana
 # -node_exporter
@@ -1058,14 +1058,14 @@ function display_banner() {
     echo ""  
     echo -e -n "${lightgreen}"
     echo "Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator "
+    echo "-geth"
     echo "-Prysm Beacon Chain"
     echo "-Prysm Validator"
-    echo "-geth"
-    echo "-Prometheus"
-    echo "-Grafana"
-    echo "-node_exporter"
-    echo "-blackbox_exporter"
-    echo "-eth2stats"
+    #echo "-Prometheus"
+    #echo "-Grafana"
+    #echo "-node_exporter"
+    #echo "-blackbox_exporter"
+    #echo "-eth2stats"
     echo ""  
     echo -e -n "${nocolor}"
     echo " 5 Second pause for respect: https://github.com/metanull-operator/eth2-ubuntu"
