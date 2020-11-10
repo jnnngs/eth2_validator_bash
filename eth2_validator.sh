@@ -1029,7 +1029,7 @@ function install_complete() {
     # fi
     if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
     then 
-    	echo -e "${green} You installed GETH eth 1 full node" | tee -a "$LOGFILE"
+    	echo -e "${white} You installed GETH eth 1 full node" | tee -a "$LOGFILE"
 	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
