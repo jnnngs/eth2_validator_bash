@@ -1,6 +1,6 @@
 # Several BASH scripts to install ETH2 Set-up
 - Harden OS, install Geth, Beacon & Validator
-- Currently hardcoded for pyrmont testnet
+- Currently hardcoded for goerli & pyrmont testnet
 - Tested in Ubuntu 20.04 LTS
 
 ## Script 1: Harden OS
