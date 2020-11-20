@@ -102,10 +102,10 @@ function begin_log() {
 }
 
 ##################
-## GETH INSTALL ##
+## BEACON INSTALL ##
 ##################
 
-function install_geth() {
+function install_beacon() {
     # query user to disable password authentication or not
     echo -e -n "${lightcyan}"
     figlet GETH Install | tee -a "$LOGFILE"
@@ -218,7 +218,7 @@ function display_banner() {
     echo "jnnn.gs v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
-    echo "Script to install ETH1 node geth "
+    echo "Script to install prysm beacon "
     echo "-geth"
 
     echo ""  
@@ -228,12 +228,13 @@ function display_banner() {
 }
 
 check_distro
+setup_environment
 clear
 display_banner
 sleep 5
 clear
 begin_log
-install_geth
+install_beacon
 install_complete
 
 exit
