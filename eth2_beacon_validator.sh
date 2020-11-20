@@ -81,7 +81,7 @@ function begin_log() {
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : SCRIPT STARTED SUCCESSFULLY " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e "------- jnnn.gs prysm beacon and validator installation Script --------- " | tee -a "$LOGFILE"
+    echo -e "------- jnnn.gs prysm beacon and validator installation Script " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
     sleep 2
@@ -154,7 +154,7 @@ function install_beacon() {
 	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml | tee -a "$LOGFILE"
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # reload daemon, start and enable geth"
+        echo " # reload daemon"
         sudo systemctl daemon-reload | tee -a "$LOGFILE"
 	#sudo systemctl start beacon-chain validator
 	#sudo systemctl enable beacon-chain validator
@@ -213,11 +213,11 @@ function display_banner() {
 
     echo -e -n "${lightcyan}"
     figlet prysm -f small
+    echo "" 
     echo "jnnn.gs v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
     echo "Script to install prysm beacon and validator "
-    echo "-geth"
 
     echo ""  
     echo -e -n "${nocolor}"
