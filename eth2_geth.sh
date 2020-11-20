@@ -228,6 +228,7 @@ function display_banner() {
 }
 
 check_distro
+setup_environment
 clear
 display_banner
 sleep 5
