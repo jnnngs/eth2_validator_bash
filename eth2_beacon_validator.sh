@@ -4,22 +4,8 @@
 #  
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
-function akguy_banner() {
-    cat << "EOF"                                                                      
-
-       _   _     ___  
-      | | | |   |__ \ 
-   ___| |_| |__    ) |
-  / _ \ __| '_ \  / / 
- |  __/ |_| | | |/ /_ 
-  \___|\__|_| |_|____|
-                                        
-    jnnn.gs
-EOF
-}
-
 # ###### SECTIONS ######
-# 1. Install prysm beacon
+# 1. Install prysm beacon and validator
 
 # Add to log command and display output on screen
 # echo " $(date +%m.%d.%Y_%H:%M:%S) : $MESSAGE" | tee -a "$LOGFILE"
@@ -109,6 +95,7 @@ function install_beacon() {
     # query user to disable password authentication or not
     echo -e -n "${lightcyan}"
     figlet BEACON Install | tee -a "$LOGFILE"
+    figlet VALIDATOR Install | tee -a "$LOGFILE"
     echo -e -n "${yellow}"
     echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
