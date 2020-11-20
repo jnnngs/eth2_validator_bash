@@ -1,15 +1,6 @@
 #!/bin/bash
-# Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator 
-# -geth
-# -Prysm Beacon Chain
-# -Prysm Validator
-# -Prometheus
-# -Grafana
-# -node_exporter
-# -blackbox_exporter
-# -eth2stats
+# Script to Harden Security on Ubuntu 20.04 LTS
 #  
-# credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
 function akguy_banner() {
     cat << "EOF"                                                                      
@@ -35,8 +26,7 @@ EOF
 # 7. HARDENING / before rules, secure shared memory, etc
 # 8. MOTD EDIT / replace boring banner with customized one
 # 9. RESTART SSHD / apply settings by restarting systemctl
-# 10. Install eth 1 full node (geth)
-# 11. INSTALL COMPLETE / display new SSH and login info
+# 10. INSTALL COMPLETE / display new SSH and login info
 
 # Add to log command and display output on screen
 # echo " $(date +%m.%d.%Y_%H:%M:%S) : $MESSAGE" | tee -a "$LOGFILE"
@@ -923,78 +913,6 @@ function restart_sshd() {
     fi
 }
 
-##################
-## GETH INSTALL ##
-##################
-
-function install_geth() {
-    # query user to disable password authentication or not
-    echo -e -n "${lightcyan}"
-    figlet GETH Install | tee -a "$LOGFILE"
-    echo -e -n "${yellow}"
-    echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
-    echo -e "---------------------------------------------- \n"
-    echo -e -n "${lightcyan}"
-    echo -e " GETH is an eth 1 full node to feed eth 1 ledger into"
-    echo -e "  the beacon node."
-    echo -e
-    
-        echo -e -n "${cyan}"
-            while :; do
-            echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install GETH eth1 full node? y/n  " GETHINSTALL
-            if [[ ${GETHINSTALL,,} == "y" || ${GETHINSTALL,,} == "Y" || ${GETHINSTALL,,} == "N" || ${GETHINSTALL,,} == "n" ]]
-            then
-                break
-            fi
-        done
-        echo -e "${nocolor}\n"
-    
-    if [ "${GETHINSTALL,,}" = "Y" ] || [ "${GETHINSTALL,,}" = "y" ]
-    then	echo -e -n "${nocolor}"
-        # Add repro #
-	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # Add geth repro"
-        sudo add-apt-repository -y ppa:ethereum/ethereum
-	sudo apt-get update >> $LOGFILE 2>&1
-	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # install ethereum"
-	sudo apt-get install ethereum -qqy >> $LOGFILE 2>&1
-        # add user account
-	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # add geth user account"
-	sudo adduser --home /home/geth --disabled-password --gecos 'Go Ethereum Client' geth
-	# download systemd Service File
-	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " #download geth systemd Service File"
-	wget -O /etc/systemd/system/geth.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/geth.service
-        echo -e -n "${white}"
-        echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # reload daemon, start and enable geth"
-        sudo systemctl daemon-reload
-	sudo systemctl start geth
-	sudo systemctl enable geth
-        echo -e "------------------------- \n" | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-        sleep 1
-        # 
-    else	echo -e -n "${yellow}"
-        echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " ** User chose not to setup geth at this time **"  | tee -a "$LOGFILE"
-        echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
-        echo -e -n "${nocolor}"
-        sleep 1
-    fi
-
-    clear
-    echo -e -n "${lightgreen}"
-    echo -e "------------------------------------------------ " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH FULL NODE COMPLETE " | tee -a "$LOGFILE"
-    echo -e "------------------------------------------------ " | tee -a "$LOGFILE"
-    echo -e -n "${nocolor}"
-}
-
 ######################
 ## Install Complete ##
 ######################
@@ -1027,24 +945,6 @@ function install_complete() {
     # then echo -e " --> The server and networking layer were hardened <--" | tee -a "$LOGFILE"
     # else echo -e " --> The server and networking layer were NOT hardened" | tee -a "$LOGFILE"
     # fi
-    if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
-    then 
-        echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
-    	echo -e " | YES: You chose to install GETH eth 1 full node   | " | tee -a "$LOGFILE"
-    	echo -e " |                                                  | " | tee -a "$LOGFILE"
-    	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
-	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl disable geth ${white} <--- disable GETH at startup" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl enable geth ${white} <--- enable GETH at startup" | tee -a "$LOGFILE"
-	echo -e "${green} sudo journalctl -u geth -f ${white} <--- read the end of the log file" | tee -a "$LOGFILE"
-	echo -e "${white} |--------------------------------------------------| " | tee -a "$LOGFILE"
-    else
-    	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
-    	echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
-	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
-    fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " Installation log saved to" $LOGFILE | tee -a "$LOGFILE"
     echo -e " Before modification, your SSH config was backed up to" | tee -a "$LOGFILE"
@@ -1060,24 +960,15 @@ function install_complete() {
 function display_banner() {
 
     echo -e -n "${lightcyan}"
-    figlet eth 2 -f small
-    figlet validator -f small
-    echo "jnnn.gs v0.1"
+    figlet jnnngs -f small
+    figlet harden OS -f small
+    echo "v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
-    echo "Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator "
-    echo "-geth"
-    echo "-Prysm Beacon Chain"
-    echo "-Prysm Validator"
-    #echo "-Prometheus"
-    #echo "-Grafana"
-    #echo "-node_exporter"
-    #echo "-blackbox_exporter"
-    #echo "-eth2stats"
+    echo "Script to Harden Security on Ubuntu 20.04 LTS"
     echo ""  
     echo -e -n "${nocolor}"
-    echo " 5 Second pause for respect: https://github.com/metanull-operator/eth2-ubuntu/blob/master/prysm-medalla.md"
-    echo "                           : https://github.com/metanull-operator/eth2-ubuntu"
+    echo " 5 Second pause ..."
 }
 
 check_distro
@@ -1098,7 +989,6 @@ ufw_config
 server_hardening
 motd_install
 restart_sshd
-install_geth
 install_complete
 
 exit
