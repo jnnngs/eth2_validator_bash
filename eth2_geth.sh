@@ -176,8 +176,8 @@ function install_complete() {
     if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
     then 
         echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
-    	echo -e " | YES: You chose to install GETH eth 1 full node   | " | tee -a "$LOGFILE"
-    	echo -e " |                                                  | " | tee -a "$LOGFILE"
+    	echo -e " | GETH eth 1 full node installed " | tee -a "$LOGFILE"
+    	echo -e " |                                                   " | tee -a "$LOGFILE"
     	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
 	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
@@ -201,7 +201,7 @@ function display_banner() {
     echo -e -n "${lightcyan}"
     figlet jnnngs -f small
     figlet geth install -f small
-    echo "jnnn.gs v0.1"
+    echo "v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
     echo "Script to install ETH1 node geth "
