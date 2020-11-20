@@ -1,6 +1,6 @@
 #!/bin/bash
-# Script to install prysm Beacon on Ubuntu 20.04 LTS
-# -prysm beacon and validator
+# Script to install prysm Beacon and Validator on Ubuntu 20.04 LTS
+# -prysm client
 #  
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
@@ -17,16 +17,16 @@
 # write to log only, no output on screen # echo  -e "---------------------------------------------------- \n" >> $LOGFILE 2>&1
 
 function check_distro() {
-    # currently only for Ubuntu 16.04
+    # currently only for Ubuntu 20.04
     if [[ -r /etc/os-release ]]; then
         . /etc/os-release
-        if [[ "${VERSION_ID}" != "16.04" ]] ; then
+        if [[ "${VERSION_ID}" != "20.04" ]] ; then
             echo -e "\nThis script works the very best with Ubuntu 16.04 LTS."
             echo -e "Some elements of this script won't work correctly on other releases.\n"
         fi
     else
         # no, thats not ok!
-        echo -e "This script only supports Ubuntu 16.04, exiting.\n"
+        echo -e "This script only supports Ubuntu 20.04, exiting.\n"
         exit 1
     fi
 }
@@ -71,7 +71,7 @@ function setup_environment() {
     clear
 
     # Set Vars
-    LOGFILE='/var/log/server_beacon.log'
+    LOGFILE='/var/log/server_prysm.log'
     SSHDFILE='/etc/ssh/sshd_config'
 }
 
@@ -98,10 +98,10 @@ function install_beacon() {
     figlet VALIDATOR | tee -a "$LOGFILE"
     echo -e -n "${yellow}"
     echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
+    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : Prysm INSTALL " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------- \n"
     echo -e -n "${lightcyan}"
-    echo -e " prysm BEACON "
+    echo -e " prysm client"
     echo -e
     
         echo -e -n "${cyan}"
@@ -119,45 +119,45 @@ function install_beacon() {
     then	echo -e -n "${nocolor}"
         # Add repro #
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # Create User Accounts"
-        sudo adduser --home /home/beacon --disabled-password --gecos 'Ethereum 2 Beacon Chain' beacon
-	sudo adduser --home /home/validator --disabled-password --gecos 'Ethereum 2 Validator' validator
-	sudo -u beacon mkdir /home/beacon/bin
-	sudo -u validator mkdir /home/validator/bin
+        echo " # Create User Accounts" | tee -a "$LOGFILE"
+        sudo adduser --home /home/beacon --disabled-password --gecos 'Ethereum 2 Beacon Chain' beacon | tee -a "$LOGFILE"
+	sudo adduser --home /home/validator --disabled-password --gecos 'Ethereum 2 Validator' validator | tee -a "$LOGFILE"
+	sudo -u beacon mkdir /home/beacon/bin | tee -a "$LOGFILE"
+	sudo -u validator mkdir /home/validator/bin | tee -a "$LOGFILE"
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # Install prysm.sh"
+        echo " # Install prysm.sh" | tee -a "$LOGFILE"
 	cd /home/validator/bin
-	sudo -u validator curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u validator chmod +x prysm.sh
-	cd /home/beacon/bin
-	sudo -u beacon curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u beacon chmod +x prysm.sh
+	sudo -u validator curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u validator chmod +x prysm.sh | tee -a "$LOGFILE"
+	cd /home/beacon/bin | tee -a "$LOGFILE"
+	sudo -u beacon curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u beacon chmod +x prysm.sh | tee -a "$LOGFILE"
 	# download systemd Service File
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " #download beacon systemd Service File"
-	wget -O /etc/systemd/system/beacon-chain.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/beacon-chain.service
-        echo " #download validator systemd Service File"
-	wget -O /etc/systemd/system/validator.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/validator.service
+        echo " #download beacon systemd Service File" | tee -a "$LOGFILE"
+	wget -O /etc/systemd/system/beacon-chain.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/beacon-chain.service | tee -a "$LOGFILE"
+        echo " #download validator systemd Service File" | tee -a "$LOGFILE"
+	wget -O /etc/systemd/system/validator.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/validator.service | tee -a "$LOGFILE"
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " #download Prysm beacon Configuration Files"
-	wget -O /home/beacon/prysm-beacon.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-beacon.yaml
-	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml
-        echo " #download Prysm validator Configuration Files"
-	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml
-	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml
+        echo " #download Prysm beacon Configuration Files" | tee -a "$LOGFILE"
+	wget -O /home/beacon/prysm-beacon.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-beacon.yaml | tee -a "$LOGFILE"
+	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml | tee -a "$LOGFILE"
+        echo " #download Prysm validator Configuration Files" | tee -a "$LOGFILE"
+	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml | tee -a "$LOGFILE"
+	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml | tee -a "$LOGFILE"
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-	echo " #Create a password file"
-	sudo -u validator touch /home/validator/.eth2validators/wallet-password.txt && sudo chmod 600 /home/validator/.eth2validators/wallet-password.txt
-	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml
-        echo " #download Prysm validator Configuration Files"
-	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml
-	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml
+	echo " #Create a password file" | tee -a "$LOGFILE"
+	sudo -u validator touch /home/validator/.eth2validators/wallet-password.txt && sudo chmod 600 /home/validator/.eth2validators/wallet-password.txt | tee -a "$LOGFILE"
+	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml | tee -a "$LOGFILE"
+        echo " #download Prysm validator Configuration Files" | tee -a "$LOGFILE"
+	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml | tee -a "$LOGFILE"
+	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml | tee -a "$LOGFILE"
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # reload daemon, start and enable geth"
-        sudo systemctl daemon-reload
-	sudo systemctl start beacon-chain validator
-	sudo systemctl enable beacon-chain validator
+        sudo systemctl daemon-reload | tee -a "$LOGFILE"
+	#sudo systemctl start beacon-chain validator
+	#sudo systemctl enable beacon-chain validator
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
@@ -213,12 +213,10 @@ function display_banner() {
 
     echo -e -n "${lightcyan}"
     figlet prysm -f small
-    figlet beacon -f small
-    figlet validator -f small
     echo "jnnn.gs v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
-    echo "Script to install prysm beacon "
+    echo "Script to install prysm beacon and validator "
     echo "-geth"
 
     echo ""  
