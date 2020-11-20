@@ -159,6 +159,14 @@ function install_beacon() {
 	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+	echo " #Create a password file"
+	sudo -u validator touch /home/validator/.eth2validators/wallet-password.txt && sudo chmod 600 /home/validator/.eth2validators/wallet-password.txt
+	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml
+        echo " #download Prysm validator Configuration Files"
+	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml
+	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml
+        echo -e -n "${white}"
+        echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # reload daemon, start and enable geth"
         sudo systemctl daemon-reload
 	sudo systemctl start beacon-chain validator
