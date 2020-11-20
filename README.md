@@ -1,23 +1,23 @@
-# Several BASH scripts to install ETH2 Set-up
+# 5 STEPS to install ETH2 Set-up
 - Harden OS, install Geth, prysm Beacon & prysm Validator
 - Currently hardcoded for goerli & pyrmont testnet
 - Tested in Ubuntu 20.04 LTS
 
-## Script 1: Harden OS
+## STEP 1: Harden OS
 if needed, install curl using ```sudo apt-get install curl```
 ```
 bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_harden.sh)
 ```
-## Script 2: Install ETH1 node geth
+## STEP 2: Install ETH1 node geth
 ```
 bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_geth.sh)
 ```
-## Script 3: Install prysm Beacon and Validator
+## STEP 3: Install prysm Beacon and Validator
 ```
-bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_geth.sh)
+bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_beacon_validator.sh)
 ```
 
-## Manual Steps to Make Validator Deposits and Install Keys
+## STEP 4: Manual Steps to Make Validator Deposits and Install Keys
 
 Follow the latest instructions at [pyrmont.launchpad.ethereum.org](https://pyrmont.launchpad.ethereum.org) or the correct launch pad for the network to which you will be connecting.
 
@@ -54,7 +54,7 @@ sudo nano /home/validator/.eth2validators/wallet-password.txt
 
 Enter the password into the first line and save the file.
 
-### Start Beacon Chain and Validator
+## STEP 5: Start Beacon Chain and Validator
 
 Start and enable the validator service.
 
