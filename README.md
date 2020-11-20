@@ -1,4 +1,4 @@
-# Several BASH scripts to install ETH2
+# Several BASH scripts to install ETH2 Validator and Eco-system
 ## Script 1: Harden OS
 if needed, install curl using ```sudo apt-get install curl```
 ```
