@@ -16,6 +16,7 @@ if needed, install curl using ```sudo apt-get install curl```
 bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_harden.sh)
 ```
 **NB: If you selected to change the SSH port then PLEASE connect via a fresh SSH connection to check everyting works as expected**
+
 **NB2: Please REBOOT the server before moving onto STEP 2**
 
 ## STEP 2: Install ETH1 node geth
