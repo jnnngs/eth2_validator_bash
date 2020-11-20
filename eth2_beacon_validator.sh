@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script to install prysm Beacon on Ubuntu 20.04 LTS
-# -prysm beacon
+# -prysm beacon and validator
 #  
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
@@ -95,7 +95,7 @@ function begin_log() {
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : SCRIPT STARTED SUCCESSFULLY " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e "------- jnnn.gs Beacon installation Script --------- " | tee -a "$LOGFILE"
+    echo -e "------- jnnn.gs prysm beacon and validator installation Script --------- " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
     sleep 2
@@ -120,7 +120,7 @@ function install_beacon() {
         echo -e -n "${cyan}"
             while :; do
             echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install GETH eth1 full node? y/n  " BEACONINSTALL
+            read -n 1 -s -r -p " Would you like to install prysm beacon and validator? y/n  " BEACONINSTALL
             if [[ ${BEACONINSTALL,,} == "y" || ${BEACONINSTALL,,} == "Y" || ${BEACONINSTALL,,} == "N" || ${BEACONINSTALL,,} == "n" ]]
             then
                 break
@@ -177,7 +177,7 @@ function install_beacon() {
         # 
     else	echo -e -n "${yellow}"
         echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-        echo -e " ** User chose not to setup geth at this time **"  | tee -a "$LOGFILE"
+        echo -e " ** User chose not to setup prysm beacon and validator at this time **"  | tee -a "$LOGFILE"
         echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
@@ -186,7 +186,7 @@ function install_beacon() {
     clear
     echo -e -n "${lightgreen}"
     echo -e "------------------------------------------------ " | tee -a "$LOGFILE"
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH FULL NODE COMPLETE " | tee -a "$LOGFILE"
+    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : BEACON and VALIDATORE COMPLETE " | tee -a "$LOGFILE"
     echo -e "------------------------------------------------ " | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
 }
@@ -202,25 +202,19 @@ function install_complete() {
     figlet Install Complete -f small | tee -a "$LOGFILE"
     echo -e -n "${lightgreen}"
     echo -e "---------------------------------------------------- " >> $LOGFILE 2>&1
-    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : YOUR SERVER IS NOW SECURE " >> $LOGFILE 2>&1
     echo -e -n "${lightpurple}"
 
     if [ "${BEACONINSTALL,,}" = "yes" ] || [ "${BEACONINSTALL,,}" = "y" ]
     then 
         echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
-    	echo -e " | YES: You chose to install prysm Beacon   | " | tee -a "$LOGFILE"
+    	echo -e " | YES: You chose to install prysm beacon and validator   | " | tee -a "$LOGFILE"
     	echo -e " |                                                  | " | tee -a "$LOGFILE"
     	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
-	echo -e " *--- Common prysm Beacon commands ---*" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl disable geth ${white} <--- disable GETH at startup" | tee -a "$LOGFILE"
-	echo -e "${green} sudo systemctl enable geth ${white} <--- enable GETH at startup" | tee -a "$LOGFILE"
-	echo -e "${green} sudo journalctl -u geth -f ${white} <--- read the end of the log file" | tee -a "$LOGFILE"
+	echo -e " *--- PLEASE now continue with the MANUAL STEPS ---*" | tee -a "$LOGFILE"
 	echo -e "${white} |--------------------------------------------------| " | tee -a "$LOGFILE"
     else
     	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
-    	echo -e " You chose NOT to install prysm Beaco" | tee -a "$LOGFILE"
+    	echo -e " You chose NOT to install prysm beacon and validator" | tee -a "$LOGFILE"
 	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
     fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
