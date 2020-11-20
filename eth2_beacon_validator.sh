@@ -197,8 +197,8 @@ function install_complete() {
     	echo -e " | YES: You chose to install prysm beacon and validator  " | tee -a "$LOGFILE"
     	echo -e " |                                                   " | tee -a "$LOGFILE"
     	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
-	echo -e " *--- PLEASE now continue with the MANUAL STEPS ---*" | tee -a "$LOGFILE"
-	echo -e "${white} |--------------------------------------------------| " | tee -a "$LOGFILE"
+	echo -e " *--- PLEASE now continue with STEP 4: Manual Steps to Make Validator Deposits and Install Keys" | tee -a "$LOGFILE"
+	echo -e "${white} |-------------------------------------------------- " | tee -a "$LOGFILE"
     else
     	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
     	echo -e " You chose NOT to install prysm beacon and validator" | tee -a "$LOGFILE"
