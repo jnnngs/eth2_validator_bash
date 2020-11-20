@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator 
+# Script to install eth1 node geth on Ubuntu 20.04 LTS
 # -geth
 #  
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
