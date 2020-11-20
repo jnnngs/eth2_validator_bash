@@ -94,8 +94,8 @@ function begin_log() {
 function install_beacon() {
     # query user to disable password authentication or not
     echo -e -n "${lightcyan}"
-    figlet BEACON Install | tee -a "$LOGFILE"
-    figlet VALIDATOR Install | tee -a "$LOGFILE"
+    figlet BEACON | tee -a "$LOGFILE"
+    figlet VALIDATOR | tee -a "$LOGFILE"
     echo -e -n "${yellow}"
     echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
