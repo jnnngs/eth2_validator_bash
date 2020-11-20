@@ -1,0 +1,5 @@
+monitoring-host: "0.0.0.0"
+graffiti: "YOUR_GRAFFITI_HERE"
+beacon-rpc-provider: "127.0.0.1:4000"
+wallet-password-file: "/home/validator/.eth2validators/wallet-password.txt"
+accept-terms-of-use: true
