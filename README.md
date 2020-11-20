@@ -1,7 +1,7 @@
 # 5 STEPS to install ETH2 Set-up
 1) Harden OS, 2) Install Geth, 3) Prysm Beacon & Validator, 4) Validator Deposits and Install Keys, 5) Start prysm Beacon & Validator services
-- Currently hardcoded for goerli & pyrmont testnet
-- Tested in Ubuntu 20.04 LTS
+ Currently hardcoded for goerli & pyrmont testnet
+ Tested in Ubuntu 20.04 LTS
 
 ## STEP 1: Harden OS
 if needed, install curl using ```sudo apt-get install curl```
