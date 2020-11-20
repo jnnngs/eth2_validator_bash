@@ -132,26 +132,37 @@ function install_beacon() {
     then	echo -e -n "${nocolor}"
         # Add repro #
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # Add geth repro"
-        sudo add-apt-repository -y ppa:ethereum/ethereum
-	sudo apt-get update >> $LOGFILE 2>&1
+        echo " # Create User Accounts"
+        sudo adduser --home /home/beacon --disabled-password --gecos 'Ethereum 2 Beacon Chain' beacon
+	sudo adduser --home /home/validator --disabled-password --gecos 'Ethereum 2 Validator' validator
+	sudo -u beacon mkdir /home/beacon/bin
+	sudo -u validator mkdir /home/validator/bin
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # install ethereum"
-	sudo apt-get install ethereum -qqy >> $LOGFILE 2>&1
-        # add user account
-	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " # add geth user account"
-	sudo adduser --home /home/geth --disabled-password --gecos 'Go Ethereum Client' geth
+        echo " # Install prysm.sh"
+	cd /home/validator/bin
+	sudo -u validator curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u validator chmod +x prysm.sh
+	cd /home/beacon/bin
+	sudo -u beacon curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u beacon chmod +x prysm.sh
 	# download systemd Service File
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
-        echo " #download geth systemd Service File"
-	wget -O /etc/systemd/system/geth.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/geth.service
+        echo " #download beacon systemd Service File"
+	wget -O /etc/systemd/system/beacon-chain.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/beacon-chain.service
+        echo " #download validator systemd Service File"
+	wget -O /etc/systemd/system/validator.service https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/validator.service
+        echo -e -n "${white}"
+        echo -e "------------------------------------------- " | tee -a "$LOGFILE"
+        echo " #download Prysm beacon Configuration Files"
+	wget -O /home/beacon/prysm-beacon.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-beacon.yaml
+	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml
+        echo " #download Prysm validator Configuration Files"
+	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml
+	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # reload daemon, start and enable geth"
         sudo systemctl daemon-reload
-	sudo systemctl start geth
-	sudo systemctl enable geth
+	sudo systemctl start beacon-chain validator
+	sudo systemctl enable beacon-chain validator
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
