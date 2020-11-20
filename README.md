@@ -1,7 +1,8 @@
 # Several BASH scripts to install ETH2 Set-up
 - Harden OS, install Geth, Beacon & Validator
+- Currently hardcoded for pyrmont testnet
+- Tested in Ubuntu 20.04 LTS
 
-** Scripts are currently hardcoded for pyrmont testnet **
 ## Script 1: Harden OS
 if needed, install curl using ```sudo apt-get install curl```
 ```
