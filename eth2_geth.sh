@@ -30,6 +30,33 @@ EOF
 # write to log only, no output on screen # echo  -e "    ** This entry gets written to the log file directly. **" >> $LOGFILE 2>&1
 # write to log only, no output on screen # echo  -e "---------------------------------------------------- \n" >> $LOGFILE 2>&1
 
+function check_distro() {
+    # currently only for Ubuntu 16.04
+    if [[ -r /etc/os-release ]]; then
+        . /etc/os-release
+        if [[ "${VERSION_ID}" != "16.04" ]] ; then
+            echo -e "\nThis script works the very best with Ubuntu 16.04 LTS."
+            echo -e "Some elements of this script won't work correctly on other releases.\n"
+        fi
+    else
+        # no, thats not ok!
+        echo -e "This script only supports Ubuntu 16.04, exiting.\n"
+        exit 1
+    fi
+}
+
+function begin_log() {
+    # Create Log File and Begin
+    echo -e -n "${lightcyan}"
+    echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
+    echo -e " $(date +%m.%d.%Y_%H:%M:%S) : SCRIPT STARTED SUCCESSFULLY " | tee -a "$LOGFILE"
+    echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
+    echo -e "------- jnnn.gs Hardening and eth2 Script --------- " | tee -a "$LOGFILE"
+    echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
+    echo -e -n "${nocolor}"
+    sleep 2
+}
+
 ##################
 ## GETH INSTALL ##
 ##################
