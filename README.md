@@ -61,6 +61,12 @@ sudo nano /home/validator/.eth2validators/wallet-password.txt
 
 Enter the password into the first line and save the file.
 
+Make the password file only readbable by the validator account. .
+
+```console
+sudo chmod 600 /home/validator/.eth2validators/wallet-password.txt
+```
+
 ## STEP 5: Start Beacon Chain and Validator
 
 Start and enable the validator service.
