@@ -5,7 +5,7 @@
 4) Validator Deposits and Install Keys (manual)
 5) Start prysm Beacon & Validator services (manual)
 
-Currently hardcoded for goerli & pyrmont testnet
+**Currently hardcoded for goerli & pyrmont testnet**
 Tested in Ubuntu 20.04 LTS
 
 Credit for details to: https://github.com/metanull-operator/eth2-ubuntu
