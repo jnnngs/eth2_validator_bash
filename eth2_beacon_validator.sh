@@ -148,7 +148,7 @@ function install_beacon() {
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
 	echo " #Create a password file" | tee -a "$LOGFILE"
 	sudo -u validator mkdir .eth2validators  | tee -a "$LOGFILE"
-	sudo -u validator touch /home/validator/.eth2validators/wallet-password.txt && sudo chmod 600 /home/validator/.eth2validators/wallet-password.txt | tee -a "$LOGFILE"
+	sudo -u validator touch /home/validator/.eth2validators/wallet-password.txt | tee -a "$LOGFILE"
         echo " #download Prysm validator Configuration Files" | tee -a "$LOGFILE"
 	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml | tee -a "$LOGFILE"
 	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml | tee -a "$LOGFILE"
@@ -194,8 +194,8 @@ function install_complete() {
     if [ "${BEACONINSTALL,,}" = "yes" ] || [ "${BEACONINSTALL,,}" = "y" ]
     then 
         echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
-    	echo -e " | YES: You chose to install prysm beacon and validator   | " | tee -a "$LOGFILE"
-    	echo -e " |                                                  | " | tee -a "$LOGFILE"
+    	echo -e " | YES: You chose to install prysm beacon and validator  " | tee -a "$LOGFILE"
+    	echo -e " |                                                   " | tee -a "$LOGFILE"
     	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
 	echo -e " *--- PLEASE now continue with the MANUAL STEPS ---*" | tee -a "$LOGFILE"
 	echo -e "${white} |--------------------------------------------------| " | tee -a "$LOGFILE"
