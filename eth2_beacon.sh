@@ -108,28 +108,27 @@ function begin_log() {
 function install_beacon() {
     # query user to disable password authentication or not
     echo -e -n "${lightcyan}"
-    figlet GETH Install | tee -a "$LOGFILE"
+    figlet BEACON Install | tee -a "$LOGFILE"
     echo -e -n "${yellow}"
     echo -e "---------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------- \n"
     echo -e -n "${lightcyan}"
-    echo -e " GETH is an eth 1 full node to feed eth 1 ledger into"
-    echo -e "  the beacon node."
+    echo -e " BEACON "
     echo -e
     
         echo -e -n "${cyan}"
             while :; do
             echo -e "\n"
-            read -n 1 -s -r -p " Would you like to install GETH eth1 full node? y/n  " GETHINSTALL
-            if [[ ${GETHINSTALL,,} == "y" || ${GETHINSTALL,,} == "Y" || ${GETHINSTALL,,} == "N" || ${GETHINSTALL,,} == "n" ]]
+            read -n 1 -s -r -p " Would you like to install GETH eth1 full node? y/n  " BEACONINSTALL
+            if [[ ${BEACONINSTALL,,} == "y" || ${BEACONINSTALL,,} == "Y" || ${BEACONINSTALL,,} == "N" || ${BEACONINSTALL,,} == "n" ]]
             then
                 break
             fi
         done
         echo -e "${nocolor}\n"
     
-    if [ "${GETHINSTALL,,}" = "Y" ] || [ "${GETHINSTALL,,}" = "y" ]
+    if [ "${BEACONINSTALL,,}" = "Y" ] || [ "${BEACONINSTALL,,}" = "y" ]
     then	echo -e -n "${nocolor}"
         # Add repro #
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
@@ -187,7 +186,7 @@ function install_complete() {
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : YOUR SERVER IS NOW SECURE " >> $LOGFILE 2>&1
     echo -e -n "${lightpurple}"
 
-    if [ "${GETHINSTALL,,}" = "yes" ] || [ "${GETHINSTALL,,}" = "y" ]
+    if [ "${BEACONINSTALL,,}" = "yes" ] || [ "${BEACONINSTALL,,}" = "y" ]
     then 
         echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
     	echo -e " | YES: You chose to install GETH eth 1 full node   | " | tee -a "$LOGFILE"
