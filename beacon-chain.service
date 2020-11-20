@@ -1,0 +1,15 @@
+[Unit]
+Description=Ethereum 2 Beacon Chain
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=beacon
+ExecStart=/home/beacon/bin/prysm.sh beacon-chain --config-file /home/beacon/prysm-beacon.yaml
+
+[Install]
+WantedBy=multi-user.target
+Alias=beacon
