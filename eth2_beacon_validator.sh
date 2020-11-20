@@ -128,9 +128,9 @@ function install_beacon() {
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # Install prysm.sh" | tee -a "$LOGFILE"
 	cd /home/validator/bin
-	sudo -u validator curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u validator chmod +x prysm.sh | tee -a "$LOGFILE"
-	cd /home/beacon/bin | tee -a "$LOGFILE"
-	sudo -u beacon curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u beacon chmod +x prysm.sh | tee -a "$LOGFILE"
+	sudo -u validator curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u validator chmod +x prysm.sh
+	cd /home/beacon/bin 
+	sudo -u beacon curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && sudo -u beacon chmod +x prysm.sh 
 	# download systemd Service File
 	echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " #download beacon systemd Service File" | tee -a "$LOGFILE"
