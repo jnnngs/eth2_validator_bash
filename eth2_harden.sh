@@ -2,20 +2,6 @@
 # Script to Harden Security on Ubuntu 20.04 LTS
 #  
 
-function akguy_banner() {
-    cat << "EOF"                                                                      
-
-       _   _     ___  
-      | | | |   |__ \ 
-   ___| |_| |__    ) |
-  / _ \ __| '_ \  / / 
- |  __/ |_| | | |/ /_ 
-  \___|\__|_| |_|____|
-                                        
-    jnnn.gs
-EOF
-}
-
 # ###### SECTIONS ######
 # 1. CREATE SWAP / if no swap exists, create 1 GB swap
 # 2. UPDATE AND UPGRADE / update operating system & pkgs
