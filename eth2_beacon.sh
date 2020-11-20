@@ -114,7 +114,7 @@ function install_beacon() {
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : GETH INSTALL " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------- \n"
     echo -e -n "${lightcyan}"
-    echo -e " BEACON "
+    echo -e " prysm BEACON "
     echo -e
     
         echo -e -n "${cyan}"
@@ -189,10 +189,10 @@ function install_complete() {
     if [ "${BEACONINSTALL,,}" = "yes" ] || [ "${BEACONINSTALL,,}" = "y" ]
     then 
         echo -e "${white} *--------------------------------------------------* " | tee -a "$LOGFILE"
-    	echo -e " | YES: You chose to install GETH eth 1 full node   | " | tee -a "$LOGFILE"
+    	echo -e " | YES: You chose to install prysm Beacon   | " | tee -a "$LOGFILE"
     	echo -e " |                                                  | " | tee -a "$LOGFILE"
     	echo -e " *--------------------------------------------------* " | tee -a "$LOGFILE"
-	echo -e " *--- Common GETH commands ---*" | tee -a "$LOGFILE"
+	echo -e " *--- Common prysm Beacon commands ---*" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl stop geth ${white} <--- stop GETH" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl start geth ${white} <--- start GETH" | tee -a "$LOGFILE"
 	echo -e "${green} sudo systemctl disable geth ${white} <--- disable GETH at startup" | tee -a "$LOGFILE"
@@ -201,7 +201,7 @@ function install_complete() {
 	echo -e "${white} |--------------------------------------------------| " | tee -a "$LOGFILE"
     else
     	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
-    	echo -e " You chose NOT to install GETH eth 1 full node" | tee -a "$LOGFILE"
+    	echo -e " You chose NOT to install prysm Beaco" | tee -a "$LOGFILE"
 	echo -e "${white}-------------------------------------------------------- " | tee -a "$LOGFILE"
     fi
     echo -e "${yellow}-------------------------------------------------------- " | tee -a "$LOGFILE"
