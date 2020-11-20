@@ -4,20 +4,6 @@
 #  
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
-function akguy_banner() {
-    cat << "EOF"                                                                      
-
-       _   _     ___  
-      | | | |   |__ \ 
-   ___| |_| |__    ) |
-  / _ \ __| '_ \  / / 
- |  __/ |_| | | |/ /_ 
-  \___|\__|_| |_|____|
-                                        
-    jnnn.gs
-EOF
-}
-
 # ###### SECTIONS ######
 # 1. Install eth 1 full node (geth)
 
@@ -31,16 +17,16 @@ EOF
 # write to log only, no output on screen # echo  -e "---------------------------------------------------- \n" >> $LOGFILE 2>&1
 
 function check_distro() {
-    # currently only for Ubuntu 16.04
+    # currently only for Ubuntu 20.04
     if [[ -r /etc/os-release ]]; then
         . /etc/os-release
-        if [[ "${VERSION_ID}" != "16.04" ]] ; then
+        if [[ "${VERSION_ID}" != "20.04" ]] ; then
             echo -e "\nThis script works the very best with Ubuntu 16.04 LTS."
             echo -e "Some elements of this script won't work correctly on other releases.\n"
         fi
     else
         # no, thats not ok!
-        echo -e "This script only supports Ubuntu 16.04, exiting.\n"
+        echo -e "This script only supports Ubuntu 20.04, exiting.\n"
         exit 1
     fi
 }
@@ -213,8 +199,8 @@ function install_complete() {
 function display_banner() {
 
     echo -e -n "${lightcyan}"
-    figlet eth 2 -f small
-    figlet validator -f small
+    figlet jnnngs -f small
+    figlet geth install -f small
     echo "jnnn.gs v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
