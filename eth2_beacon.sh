@@ -1,6 +1,6 @@
 #!/bin/bash
-# Script to Harden Security on Ubuntu 20.04 LTS & install eth2 validator 
-# -geth
+# Script to install prysm Beacon on Ubuntu 20.04 LTS
+# -prysm beacon
 #  
 # credit to https://github.com/metanull-operator/eth2-ubuntu for the hardwork!
 
@@ -19,7 +19,7 @@ EOF
 }
 
 # ###### SECTIONS ######
-# 1. Install eth 1 full node (geth)
+# 1. Install prysm beacon
 
 # Add to log command and display output on screen
 # echo " $(date +%m.%d.%Y_%H:%M:%S) : $MESSAGE" | tee -a "$LOGFILE"
