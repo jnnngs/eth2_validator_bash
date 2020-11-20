@@ -157,8 +157,8 @@ function install_beacon() {
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " # reload daemon"
         sudo systemctl daemon-reload | tee -a "$LOGFILE"
-	#sudo systemctl start beacon-chain validator
-	#sudo systemctl enable beacon-chain validator
+	sudo systemctl start beacon-chain 
+	sudo systemctl enable beacon-chain validator
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
