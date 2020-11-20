@@ -217,7 +217,7 @@ function display_banner() {
     echo -e -n "${lightcyan}"
     figlet prysm -f small
     echo "" 
-    echo "jnnn.gs v0.1"
+    echo "v0.1"
     echo ""  
     echo -e -n "${lightgreen}"
     echo "Script to install prysm beacon and validator "
