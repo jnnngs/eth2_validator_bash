@@ -212,7 +212,8 @@ function install_complete() {
 function display_banner() {
 
     echo -e -n "${lightcyan}"
-    figlet eth 2 -f small
+    figlet prysm -f small
+    figlet beacon & -f small
     figlet validator -f small
     echo "jnnn.gs v0.1"
     echo ""  
@@ -222,8 +223,7 @@ function display_banner() {
 
     echo ""  
     echo -e -n "${nocolor}"
-    echo " 5 Second pause for respect: https://github.com/metanull-operator/eth2-ubuntu/blob/master/prysm-medalla.md"
-    echo "                           : https://github.com/metanull-operator/eth2-ubuntu"
+    echo " 5 Second pause for respect: prysmaticlabs.com & https://github.com/metanull-operator/eth2-ubuntu"
 }
 
 check_distro
