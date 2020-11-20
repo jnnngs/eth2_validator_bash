@@ -1,13 +1,15 @@
-# eth2_validator_bash
-Bash script to install eth2 validator (still in development)
-
+# Several BASH scripts to install ETH2
+## Script 1: Harden OS
 if needed, install curl using:-
 ```
 sudo apt-get install curl
 ```
-
-HOWTO run:
-
 ```
-bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_validator.sh)
+bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_harden.sh)
 ```
+## Script 2: Install ETH1 node geth
+```
+bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_geth.sh)
+```
+
+
