@@ -102,7 +102,7 @@ function begin_log() {
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : SCRIPT STARTED SUCCESSFULLY " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e "------- jnnn.gs Hardening and eth2 Script --------- " | tee -a "$LOGFILE"
+    echo -e "------- jnnn.gs Hardening Script --------- " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
     sleep 2
