@@ -8,6 +8,8 @@
 Currently hardcoded for goerli & pyrmont testnet
 Tested in Ubuntu 20.04 LTS
 
+Credit for details to: https://github.com/metanull-operator/eth2-ubuntu
+
 ## STEP 1: Harden OS
 if needed, install curl using ```sudo apt-get install curl```
 ```
