@@ -199,6 +199,7 @@ function install_complete() {
 function display_banner() {
 
     echo -e -n "${lightcyan}"
+    apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install figlet | tee -a "$LOGFILE"
     figlet jnnngs -f small
     figlet geth install -f small
     echo "v0.1"
