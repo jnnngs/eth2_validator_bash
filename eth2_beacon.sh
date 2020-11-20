@@ -45,13 +45,57 @@ function check_distro() {
     fi
 }
 
+function setup_environment() {
+    ### define colors ###
+    lightred=$'\033[1;31m'  # light red
+    red=$'\033[0;31m'  # red
+    lightgreen=$'\033[1;32m'  # light green
+    green=$'\033[0;32m'  # green
+    lightblue=$'\033[1;34m'  # light blue
+    blue=$'\033[0;34m'  # blue
+    lightpurple=$'\033[1;35m'  # light purple
+    purple=$'\033[0;35m'  # purple
+    lightcyan=$'\033[1;36m'  # light cyan
+    cyan=$'\033[0;36m'  # cyan
+    lightgray=$'\033[0;37m'  # light gray
+    white=$'\033[1;37m'  # white
+    brown=$'\033[0;33m'  # brown
+    yellow=$'\033[1;33m'  # yellow
+    darkgray=$'\033[1;30m'  # dark gray
+    black=$'\033[0;30m'  # black
+    nocolor=$'\e[0m' # no color
+
+    echo -e -n "${lightred}"
+    echo -e -n "${red}"
+    echo -e -n "${lightgreen}"
+    echo -e -n "${green}"
+    echo -e -n "${lightblue}"
+    echo -e -n "${blue}"
+    echo -e -n "${lightpurple}"
+    echo -e -n "${purple}"
+    echo -e -n "${lightcyan}"
+    echo -e -n "${cyan}"
+    echo -e -n "${lightgray}"
+    echo -e -n "${white}"
+    echo -e -n "${brown}"
+    echo -e -n "${yellow}"
+    echo -e -n "${darkgray}"
+    echo -e -n "${black}"
+    echo -e -n "${nocolor}"
+    clear
+
+    # Set Vars
+    LOGFILE='/var/log/server_beacon.log'
+    SSHDFILE='/etc/ssh/sshd_config'
+}
+
 function begin_log() {
     # Create Log File and Begin
     echo -e -n "${lightcyan}"
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : SCRIPT STARTED SUCCESSFULLY " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- " | tee -a "$LOGFILE"
-    echo -e "------- jnnn.gs Hardening and eth2 Script --------- " | tee -a "$LOGFILE"
+    echo -e "------- jnnn.gs Beacon installation Script --------- " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------------- \n" | tee -a "$LOGFILE"
     echo -e -n "${nocolor}"
     sleep 2
