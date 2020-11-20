@@ -94,6 +94,7 @@ function begin_log() {
 function install_beacon() {
     # query user to disable password authentication or not
     echo -e -n "${lightcyan}"
+    clear
     figlet BEACON | tee -a "$LOGFILE"
     figlet VALIDATOR | tee -a "$LOGFILE"
     echo -e -n "${yellow}"
@@ -101,7 +102,7 @@ function install_beacon() {
     echo -e " $(date +%m.%d.%Y_%H:%M:%S) : Prysm INSTALL " | tee -a "$LOGFILE"
     echo -e "---------------------------------------------- \n"
     echo -e -n "${lightcyan}"
-    echo -e " prysm client"
+    echo -e " install prysm beacon and validator clients"
     echo -e
     
         echo -e -n "${cyan}"
