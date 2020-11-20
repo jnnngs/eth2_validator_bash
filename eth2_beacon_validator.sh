@@ -213,7 +213,7 @@ function display_banner() {
 
     echo -e -n "${lightcyan}"
     figlet prysm -f small
-    figlet beacon & -f small
+    figlet beacon -f small
     figlet validator -f small
     echo "jnnn.gs v0.1"
     echo ""  
@@ -223,7 +223,7 @@ function display_banner() {
 
     echo ""  
     echo -e -n "${nocolor}"
-    echo " 5 Second pause for respect: prysmaticlabs.com & https://github.com/metanull-operator/eth2-ubuntu"
+    echo " 5 Second pause for respect: prysmaticlabs.com and https://github.com/metanull-operator/eth2-ubuntu"
 }
 
 check_distro
