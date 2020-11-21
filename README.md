@@ -202,3 +202,6 @@ sudo systemctl restart validator
 sudo systemctl restart beacon-chain
 ```
 
+#Sources/Inspiration
+Prysm: [https://docs.prylabs.network/docs/getting-started/](https://docs.prylabs.network/docs/getting-started/)
+metanull-operator: [https://github.com/metanull-operator/eth2-ubuntu](https://github.com/metanull-operator/eth2-ubuntu)
