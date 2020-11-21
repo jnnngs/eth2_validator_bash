@@ -74,6 +74,7 @@ Then, edit the "wallet-password.txt" file and put the password you entered into 
 
 ```console
 sudo nano /home/validator/.eth2validators/wallet-password.txt
+sudo chown validator:validator wallet-password.txt
 ```
 Enter the password into the first line and save the file.
 
