@@ -28,7 +28,7 @@ bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main
 bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_beacon_validator.sh)
 ```
 
-## STEP 4a: Manual Steps to Make Validator Deposits and Install Keys
+## STEP 4a: Manual Steps to Make Validator Deposits
 
 **Only perform STEP 4a below if you have NOT deposted your 32 ETH (per validator) into Launchpad**
 
@@ -55,7 +55,7 @@ Follow the instructions by dragging and dropping the deposit file into the launc
 
 **BACKUP YOUR MNEMONIC AND PASSWORD!**
 
-## STEP 4b: Manual Steps IMPORT your data file into the Validator
+## STEP 4b: Manual Steps IMPORT your keys into the Validator
 
 The following command will import the data file (account) into Validator.
 
@@ -70,7 +70,7 @@ Follow the prompts. The default wallet directory should be `/home/validator/.eth
 sudo cp $HOME/eth2deposit-cli/validator_keys /home/validator/eth2deposit-cli/validator_keys
 sudo -u validator /home/validator/bin/prysm.sh validator accounts import --keys-dir=/home/validator/eth2deposit-cli/validator_keys
 ```
-Edit the file and put the password you entered into the `deposit` tool into the `wallet-password.txt` file.
+Then, edit the "wallet-password.txt" file and put the password you entered into the `deposit` tool.
 
 ```console
 sudo nano /home/validator/.eth2validators/wallet-password.txt
