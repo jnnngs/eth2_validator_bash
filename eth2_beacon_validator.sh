@@ -219,7 +219,8 @@ function display_banner() {
     echo -e -n "${lightcyan}"
     apt-get update
     apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install figlet curl | tee -a "$LOGFILE"
-    figlet prysm -f small
+    clear
+    figlet prysm install -f small
     echo "" 
     echo "v0.1"
     echo ""  
