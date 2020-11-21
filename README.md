@@ -28,7 +28,11 @@ bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main
 bash <(curl -s https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/eth2_beacon_validator.sh)
 ```
 
-## STEP 4: Manual Steps to Make Validator Deposits and Install Keys
+## STEP 4a: Manual Steps to Make Validator Deposits and Install Keys
+
+**Only perform STEP 4a below if you have NOT deposted your 32 ETH (per validator) into Launchpad**
+
+**SKIP 4a if you already have your deposit data file and MNEMONIC**
 
 Follow the latest instructions at [pyrmont.launchpad.ethereum.org](https://pyrmont.launchpad.ethereum.org) or the correct launch pad for the network to which you will be connecting.
 
@@ -45,24 +49,32 @@ cd eth2deposit-cli
 
 Change the `NUMBER_OF_VALIDATORS` to the number of validators you want to create. Follow the prompts and instructions.
 
-**BACKUP YOUR MNEMONIC AND PASSWORD!**
-
 The next step is to upload your deposit data file to the launchpad site. If you are using Ubuntu Server, you can either open up the deposit data file and copy it to a file on your desktop computer with the same name, or you can use scp or an equivalent tool to copy the deposit data to your desktop computer.
 
 Follow the instructions by dragging and dropping the deposit file into the launchpad site. Then continue to follow the instructions until your deposit transaction is successful.
+
+**BACKUP YOUR MNEMONIC AND PASSWORD!**
+
+## STEP 4b: Manual Steps IMPORT your data file into the Validator
+
+The following command will import the data file (account) into Validator.
 
 ```console
 sudo -u validator /home/validator/bin/prysm.sh validator accounts import --keys-dir=$HOME/eth2deposit-cli/validator_keys
 ```
 
-Follow the prompts. The default wallet directory should be `/home/validator/.eth2validators/prysm-wallet-v2`. Use the same password used when you were prompted for a password while running `./deposit new-mnemonic --num_validators NUMBER_OF_VALIDATORS --chain pyrmont`.
+Follow the prompts. The default wallet directory should be `/home/validator/.eth2validators/prysm-wallet-v2`. Use the same password used when you were prompted for a password when you ran `./deposit new-mnemonic --num_validators NUMBER_OF_VALIDATORS --chain pyrmont`.
 
+**NB**: If you encounter any file or folder permissions issues, then run the following:-
+```console
+sudo cp $HOME/eth2deposit-cli/validator_keys /home/validator/eth2deposit-cli/validator_keys
+sudo -u validator /home/validator/bin/prysm.sh validator accounts import --keys-dir=/home/validator/eth2deposit-cli/validator_keys
+```
 Edit the file and put the password you entered into the `deposit` tool into the `wallet-password.txt` file.
 
 ```console
 sudo nano /home/validator/.eth2validators/wallet-password.txt
 ```
-
 Enter the password into the first line and save the file.
 
 Make the password file only readbable by the validator account. .
