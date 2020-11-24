@@ -4,6 +4,5 @@ http-web3provider: "http://127.0.0.1:8545"
 monitoring-host: "0.0.0.0"
 p2p-tcp-port: 13000
 p2p-udp-port: 12000
-pyrmont: true
 accept-terms-of-use: true
 p2p-max-peers: 70
