@@ -608,6 +608,8 @@ function ufw_config() {
     then	echo -e -n "${nocolor}"
         # make sure ufw is installed #
         apt-get install ufw -qqy >> $LOGFILE 2>&1
+	sudo ufw --force disable
+	sudo ufw --force reset
         # add firewall rules
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
@@ -627,6 +629,8 @@ function ufw_config() {
 	sudo ufw allow 30303/udp
 	# grafana
 	sudo ufw allow 3000/tcp
+	sudo ufw default deny incoming
+	sudo ufw default allow outgoing
         echo -e "------------------------- \n" | tee -a "$LOGFILE"
         echo -e -n "${nocolor}"
         sleep 1
