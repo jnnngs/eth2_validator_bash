@@ -57,10 +57,14 @@ Follow the instructions by dragging and dropping the deposit file into the launc
 
 ## STEP 4b: Manual Steps IMPORT your keys into the Validator
 
-The following command will import the data file (account) into Validator.
+The following command will import the data file (account) into Validator. Ensure your key files are in $HOME/eth2deposit-cli/validator_keys OR /home/validator/eth2deposit-cli/validator_keys
 
-```console
+```console if your keys are in $HOME/eth2deposit-cli/validator_keys
 sudo -u validator /home/validator/bin/prysm.sh validator accounts import --keys-dir=$HOME/eth2deposit-cli/validator_keys --accept-terms-of-use --pyrmont
+```
+
+```console if your keys are in /home/validator/eth2deposit-cli/validator_keys
+sudo -u validator /home/validator/bin/prysm.sh validator accounts import --keys-dir=/home/validator/eth2deposit-cli/validator_keys --accept-terms-of-use --pyrmont
 ```
 
 Follow the prompts. The default wallet directory should be `/home/validator/.eth2validators/prysm-wallet-v2`. Use the same password used when you were prompted for a password when you ran `./deposit new-mnemonic --num_validators NUMBER_OF_VALIDATORS --chain pyrmont`.
