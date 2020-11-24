@@ -200,7 +200,7 @@ function display_banner() {
 
     echo -e -n "${lightcyan}"
     apt-get update
-    apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install figlet software-properties-common | tee -a "$LOGFILE"
+    apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install figlet software-properties-common lm-sensors | tee -a "$LOGFILE"
     #figlet jnnngs -f small
     clear
     figlet geth install -f small
