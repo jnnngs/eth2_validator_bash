@@ -8,7 +8,11 @@
 **Updated for MainNet**
 Tested in Ubuntu 20.04 LTS
 
-Credit for details to: https://github.com/metanull-operator/eth2-ubuntu
+Credit for details to: 
+
+https://github.com/metanull-operator/eth2-ubuntu
+
+https://github.com/akcryptoguy/vps-harden
 
 ## STEP 1: Harden OS
 if needed, install curl using ```sudo apt-get install curl```
