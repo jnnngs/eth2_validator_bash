@@ -959,6 +959,7 @@ function display_banner() {
     echo ""  
     echo -e -n "${lightgreen}"
     echo "Script to Harden Security on Ubuntu 20.04 LTS"
+    echo "Credits to: https://github.com/akcryptoguy/vps-harden"
     echo ""  
     echo -e -n "${nocolor}"
     echo " 5 Second pause ..."
