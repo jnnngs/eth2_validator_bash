@@ -152,7 +152,7 @@ function install_beacon() {
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
 	echo " #Create a password file" | tee -a "$LOGFILE"
-	sudo -u validator mkdir .eth2validators  | tee -a "$LOGFILE"
+	sudo -u validator mkdir /home/validator/.eth2validators  | tee -a "$LOGFILE"
 	sudo -u validator touch /home/validator/.eth2validators/wallet-password.txt | tee -a "$LOGFILE"
         echo " #download Prysm validator Configuration Files" | tee -a "$LOGFILE"
 	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml | tee -a "$LOGFILE"
