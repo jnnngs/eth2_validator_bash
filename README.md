@@ -101,6 +101,11 @@ sudo systemctl enable beacon-chain validator
 ## Common Commands
 The following are some common commands you may want to use while running this setup.
 
+### geth commands
+```connect to geth
+geth attach http://127.0.0.1:8545
+```
+
 ### Service Statuses
 To see the status of system services:
 
