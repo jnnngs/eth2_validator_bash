@@ -143,9 +143,11 @@ function install_beacon() {
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
         echo " #download Prysm beacon Configuration Files" | tee -a "$LOGFILE"
 	wget -O /home/beacon/prysm-beacon.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-beacon.yaml | tee -a "$LOGFILE"
+	sudo chown beacon:beacon /home/beacon/prysm-beacon.yaml
 	sudo -u beacon chmod 600 /home/beacon/prysm-beacon.yaml | tee -a "$LOGFILE"
         echo " #download Prysm validator Configuration Files" | tee -a "$LOGFILE"
 	wget -O /home/validator/prysm-validator.yaml https://raw.githubusercontent.com/jnnngs/eth2_validator_bash/main/prysm-validator.yaml | tee -a "$LOGFILE"
+	sudo chown validator:validator /home/validator/prysm-validator.yaml
 	sudo -u validator chmod 600 /home/validator/prysm-validator.yaml | tee -a "$LOGFILE"
         echo -e -n "${white}"
         echo -e "------------------------------------------- " | tee -a "$LOGFILE"
