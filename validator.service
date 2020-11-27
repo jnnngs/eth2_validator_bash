@@ -3,6 +3,7 @@ Description=Ethereum 2 Validator
 Wants=beacon-chain.service
 After=beacon-chain.service
 StartLimitIntervalSec=0
+BindsTo=beacon-chain.service
 
 [Service]
 Type=simple
