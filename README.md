@@ -225,8 +225,8 @@ metanull-operator: [https://github.com/metanull-operator/eth2-ubuntu](https://gi
 
 ## Beacon-node set-up
  
-#### Set-up Beacon-chain failover for infura.io free or alchemy.io free.
-#### Prylabs fallback eth1 nodes documentation.
+#### Set-up Beacon-chain failover for https://infura.io/ free or https://www.alchemyapi.io/ free.
+#### Prylabs fallback: https://docs.prylabs.network/docs/prysm-usage/setup-eth1/#adding-fallback-eth1-nodes
 
 ```console
 http-web3provider: http://localhost:8545
