@@ -44,9 +44,9 @@ Look for the latest eth2.0-deposit-cli [here](https://github.com/ethereum/eth2.0
 
 ```console
 cd
-wget https://github.com/ethereum/eth2.0-deposit-cli/releases/download/v1.0.0/eth2deposit-cli-9310de0-linux-amd64.tar.gz
-tar xzvf eth2deposit-cli-9310de0-linux-amd64.tar.gz
-mv eth2deposit-cli-9310de0-linux-amd64 eth2deposit-cli
+wget https://github.com/ethereum/eth2.0-deposit-cli/releases/download/v1.1.1/eth2deposit-cli-7bac110-linux-amd64.tar.gz
+tar xzvf eth2deposit-cli-7bac110-linux-amd64.tar.gz
+mv eth2deposit-cli-7bac110-linux-amd64 eth2deposit-cli
 cd eth2deposit-cli
 ./deposit new-mnemonic --num_validators NUMBER_OF_VALIDATORS
 ```
