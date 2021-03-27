@@ -223,10 +223,10 @@ metanull-operator: [https://github.com/metanull-operator/eth2-ubuntu](https://gi
 
 # Prune Geth Service to help maintain disk space usage
 
-##Beacon-node set-up
+## Beacon-node set-up
  
-####Set-up Beacon-chain failover for infura.io free or alchemy.io free.
-####Prylabs fallback eth1 nodes documentation.
+#### Set-up Beacon-chain failover for infura.io free or alchemy.io free.
+#### Prylabs fallback eth1 nodes documentation.
 
 ```console
 http-web3provider: http://localhost:8545
@@ -235,39 +235,39 @@ fallback-web3provider:
 - https://eth-mainnet.alchemyapi.io/v2/YOUR-PROJECT-ID
 ```
  
-####Restart Beacon-node
+#### Restart Beacon-node
 ```console
 sudo service beacon-node restart
 ```
 
-####Check  Beacon-node service status
+#### Check  Beacon-node service status
 ```console
 sudo service beacon-node status
 ```
  
-####Check Beacon-node service logs for activity
+#### Check Beacon-node service logs for activity
 ```console
 sudo journalctl -fu beacon-node
 ```
  
-##Geth node pruning
+## Geth node pruning
  
-####Check location of Geth working directory
+#### Check location of Geth working directory
 ```console
 cat /etc/systemd/system/geth.service
 ```
  
-####Get current size of GETH data location
+#### Get current size of GETH data location
 ```console
 du -sh <WorkingDirectory>
 ```
  
-####Stop Geth
+#### Stop Geth
 ```console
 sudo service geth stop
 ```
  
-####Change Service to Prune
+#### Change Service to Prune
 ```console
 vi /etc/systemd/system/geth.service
 ```
@@ -282,27 +282,27 @@ vi /etc/systemd/system/geth.service
 ExecStart=/usr/bin/geth snapshot prune-state
 ```
  
-####Reload Service config
+#### Reload Service config
 ```console
 sudo systemctl daemon-reload
 ```
  
-####Start Geth Pruning
+#### Start Geth Pruning
 ```console
 sudo service geth start
 ```
  
-####Check Geth service status
+#### Check Geth service status
 ```console
 sudo service geth status
 ```
  
-####Check Geth service logs for pruning activity
+#### Check Geth service logs for pruning activity
 ```console
 sudo journalctl -fu geth
 ```
  
-##Once pruning and dB compacting has finished...
+## Once pruning and dB compacting has finished...
 ```console
 Stop Geth
 Change Service ExecStart back to original config (comment out Prune line and uncomment original one)
